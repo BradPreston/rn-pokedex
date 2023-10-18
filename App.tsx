@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+// import { useFonts } from 'expo-font';
+// import { useCallback } from 'react';
+// import * as SplashScreen from 'expo-splash-screen';
+// import { Tabs } from 'expo-router/tabs';
+// import DefaultIndex from './app/index';
+// import { Text } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// SplashScreen.preventAutoHideAsync();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// export default function App() {
+// 	const [fontsLoaded, fontsError] = useFonts({
+// 		'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
+// 		'Roboto-Black': require('./assets/fonts/Roboto-Black.ttf')
+// 	});
+
+// 	const onLayoutRootView = useCallback(async () => {
+// 		if (fontsLoaded || fontsError) {
+// 			await SplashScreen.hideAsync();
+// 		}
+// 	}, [fontsLoaded, fontsError]);
+
+// 	if (!fontsLoaded || fontsError) return null;
+
+// 	return (
+// 		<SafeAreaProvider onLayout={onLayoutRootView}>
+// 			<SafeAreaView>
+// 				<DefaultIndex />
+// 			</SafeAreaView>
+// 		</SafeAreaProvider>
+// 	);
+// }
+
+// const styles = StyleSheet.create({
+// 	safeArea: {
+// 		backgroundColor: theme.background,
+// 		color: theme.text
+// 	}
+// });
