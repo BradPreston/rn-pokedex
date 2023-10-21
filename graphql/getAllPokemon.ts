@@ -4,7 +4,7 @@ import { Pokemon } from '../types';
 
 export default async function getAllPokemon(): Promise<Pokemon[]> {
 	try {
-		const res = await client.query({
+		const { data } = await client.query({
 			query: gql`
 				query getAllPokemon {
 					pokemon: pokemon_v2_pokemon(limit: 151) {
@@ -15,7 +15,7 @@ export default async function getAllPokemon(): Promise<Pokemon[]> {
 			`
 		});
 
-		return res.data.pokemon_v2_pokemon;
+		return data.pokemon;
 	} catch (err) {
 		console.log('gql error: ', err);
 		throw new Error('Something went wrong');

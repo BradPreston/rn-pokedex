@@ -56,7 +56,7 @@ export default async function getPokemonById(id: number): Promise<Species[]> {
 				}
 			`,
 			variables: {
-				id: id
+				id
 			}
 		});
 
