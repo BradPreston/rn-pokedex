@@ -11,7 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "scheme": "http://localhost:8081",
+    "scheme": "pokedex-app",
     "entryPoint": "./src/app/index.tsx",
     "assetBundlePatterns": [
       "**/*"
