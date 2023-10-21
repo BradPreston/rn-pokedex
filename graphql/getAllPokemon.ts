@@ -6,8 +6,8 @@ export default async function getAllPokemon(): Promise<Pokemon[]> {
 	try {
 		const res = await client.query({
 			query: gql`
-				query MyQuery {
-					pokemon_v2_pokemon(limit: 151) {
+				query getAllPokemon {
+					pokemon: pokemon_v2_pokemon(limit: 151) {
 						name
 						id
 					}
