@@ -1,7 +1,7 @@
 import { Link, useFocusEffect } from 'expo-router';
 import { Text, View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
-import { getPokemonFromParty, removeAllPokemonFromParty } from '../../storage';
+import { party } from '../../storage';
 import { useRef, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -21,14 +21,11 @@ export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 }
 
 export default function Party() {
-	const { data, status, refetch } = useQuery(
-		'pokemonParty',
-		getPokemonFromParty
-	);
+	const { data, status, refetch } = useQuery('pokemonParty', party.getAll);
 	useRefreshOnFocus(refetch);
 
 	async function clearPokemonParty() {
-		await removeAllPokemonFromParty();
+		await party.removeAll();
 		refetch();
 	}
 
@@ -36,9 +33,6 @@ export default function Party() {
 		return (
 			<View>
 				<Text>Your Party</Text>
-				{/* {data.map((pkmn) => (
-					<Text key={pkmn.name}>{pkmn.name}</Text>
-				))} */}
 				<FlatList
 					data={data}
 					keyExtractor={(item) => item.name}
