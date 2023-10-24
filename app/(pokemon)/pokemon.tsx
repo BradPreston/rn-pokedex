@@ -1,34 +1,50 @@
-import { View, FlatList, Image } from 'react-native';
+import {
+	View,
+	FlatList,
+	Text,
+	FlatListProps,
+	ListRenderItem
+} from 'react-native';
 import getAllPokemon from '../../graphql/getAllPokemon';
-import { useEffect, useState } from 'react';
-import { Pokemon } from '../../types';
 import ListItem from '../../components/ListItem';
+import { useQuery } from 'react-query';
+import { memo, useCallback } from 'react';
+import { Pokemon } from '../../types';
 
-export default function AllPokemon() {
-	const [pokemon, setPokemon] = useState<Pokemon[]>([]);
-	const [loaded, setLoaded] = useState(false);
+export default memo(function AllPokemon() {
+	const { data, status } = useQuery('allPokemon', getAllPokemon);
 
-	useEffect(() => {
-		setLoaded(false);
-		getAllPokemon().then((pkmn) => setPokemon(pkmn));
-		pokemon.forEach((pkmn) =>
-			Image.prefetch(
-				`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pkmn.id}.png`
-			)
+	const renderItem = useCallback<ListRenderItem<Pokemon>>(
+		({ item }) => <ListItem id={item.id} name={item.name} />,
+		[]
+	);
+
+	if (status === 'loading') {
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
 		);
-		setLoaded(true);
-	}, []);
+	}
 
-	return (
-		<View>
-			{loaded && (
+	if (status === 'error') {
+		return (
+			<View>
+				<Text>An error ocurred</Text>
+			</View>
+		);
+	}
+
+	if (status === 'success') {
+		return (
+			<View>
 				<FlatList
 					showsVerticalScrollIndicator={false}
-					data={pokemon}
-					renderItem={({ item }) => <ListItem id={item.id} name={item.name} />}
+					data={data}
+					renderItem={renderItem}
 					keyExtractor={(item) => item.name}
 				/>
-			)}
-		</View>
-	);
-}
+			</View>
+		);
+	}
+});
