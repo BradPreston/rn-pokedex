@@ -1,5 +1,5 @@
 import '../global.css';
-import { SplashScreen, Stack, Tabs } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCallback, useContext } from 'react';

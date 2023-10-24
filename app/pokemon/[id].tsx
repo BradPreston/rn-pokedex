@@ -1,17 +1,8 @@
-import {
-	View,
-	Text,
-	Image,
-	StyleSheet,
-	Pressable,
-	GestureResponderEvent
-} from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import getPokemonById from '../../graphql/getPokemonById';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useContext } from 'react';
-import { PartyContext } from '../../components/context';
-import { setParty } from '../../storage';
+import { useQuery, useMutation } from 'react-query';
+import { party } from '../../storage';
 
 const styles = StyleSheet.create({
 	title: {
@@ -24,10 +15,8 @@ const styles = StyleSheet.create({
 });
 
 export default function PokemonById() {
-	// let party = useContext(PartyContext);
-	// const queryClient = useQueryClient();
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const mutation = useMutation(setParty);
+	const mutation = useMutation('pokemonById', party.insert);
 
 	if (!id) return;
 	const numId = parseInt(id);

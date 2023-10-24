@@ -1,10 +1,4 @@
-import {
-	View,
-	FlatList,
-	Text,
-	FlatListProps,
-	ListRenderItem
-} from 'react-native';
+import { View, FlatList, Text, ListRenderItem } from 'react-native';
 import getAllPokemon from '../../graphql/getAllPokemon';
 import ListItem from '../../components/ListItem';
 import { useQuery } from 'react-query';
