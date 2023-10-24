@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { memo } from 'react';
-import { Image, Text } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import { useQueryClient } from 'react-query';
 import getPokemonById from '../graphql/getPokemonById';
 
@@ -13,21 +13,22 @@ export default memo(function ListItem({ id, name }: Props) {
 	const clientQuery = useQueryClient();
 
 	return (
-		<Link
-			href={`/pokemon/${id}`}
-			className='flex w-full justify-between'
-			onPress={async () =>
-				await clientQuery.prefetchQuery('pokemonById', () => getPokemonById(id))
-			}>
+		<View className='flex justify-left items-center flex-row gap-5 ml-5'>
 			<Image
-				className='w-12 h-12'
-				width={48}
-				height={48}
+				className='w-16 h-16'
 				source={{
 					uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
 				}}
 			/>
-			<Text>{name}</Text>
-		</Link>
+			<Link
+				href={`/pokemon/${id}`}
+				onPress={async () =>
+					await clientQuery.prefetchQuery('pokemonById', () =>
+						getPokemonById(id)
+					)
+				}>
+				<Text className='text-xl'>{name}</Text>
+			</Link>
+		</View>
 	);
 });
