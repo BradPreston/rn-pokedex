@@ -16,6 +16,9 @@ export type Species = {
 	name: string;
 	is_legendary: boolean;
 	is_mythical: boolean;
+	pokemon: {
+		nodes: Pokemon[];
+	};
 	habitat: {
 		name: string;
 	};
