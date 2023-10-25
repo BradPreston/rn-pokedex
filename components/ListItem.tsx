@@ -27,7 +27,7 @@ export default memo(function ListItem({ id, name }: Props) {
 						getPokemonById(id)
 					)
 				}>
-				<Text className='text-xl'>{name}</Text>
+				<Text className='text-xl capitalize'>{name}</Text>
 			</Link>
 		</View>
 	);
