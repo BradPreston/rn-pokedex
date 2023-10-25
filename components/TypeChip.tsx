@@ -36,7 +36,7 @@ const typeColors: TypeColors = {
 		bg: 'bg-yellow-500'
 	},
 	ground: {
-		bg: 'bg-orange-500'
+		bg: 'bg-orange-600'
 	},
 	ice: {
 		bg: 'bg-cyan-500'
@@ -55,6 +55,12 @@ const typeColors: TypeColors = {
 	},
 	dragon: {
 		bg: 'bg-emerald-700'
+	},
+	fairy: {
+		bg: 'bg-sky-400'
+	},
+	steel: {
+		bg: 'bg-slate-700'
 	}
 };
 
