@@ -25,6 +25,11 @@ export type Species = {
 	flavorText: FlavorText[];
 };
 
+export type SimplePokemon = {
+	id: number;
+	name: string;
+};
+
 type Ability = {
 	ability: {
 		name: string;
