@@ -4,6 +4,7 @@ import getPokemonById from '../../graphql/getPokemonById';
 import { useQuery, useMutation } from 'react-query';
 import { party } from '../../storage';
 import TypeChip from '../../components/TypeChip';
+import Button from '../../components/Button';
 
 function convertMetersToFeetString(height: number): string {
 	const inches = Math.round((height / 10) * 39.37);
@@ -45,6 +46,7 @@ export default function PokemonById() {
 	if (isSuccess) {
 		const pokemon = data[0];
 		const pokemonInfo = pokemon.pokemon.nodes[0];
+		const { id, name } = pokemonInfo;
 
 		return (
 			<View className='flex flex-col'>
@@ -77,11 +79,10 @@ export default function PokemonById() {
 					</Text>
 
 					<View className='flex items-center mt-5'>
-						<Pressable
-							className='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
-							onPress={() => mutation.mutate(pokemon)}>
-							<Text className='text-white text-lg'>Add to Party</Text>
-						</Pressable>
+						<Button
+							addToParty={() => mutation.mutate({ id, name })}
+							styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+						/>
 					</View>
 				</View>
 			</View>
