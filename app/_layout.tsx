@@ -2,9 +2,8 @@ import '../global.css';
 import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { PartyContext } from '../components/context';
 
 export default function Layout() {
 	const [fontsLoaded, fontsError] = useFonts({
@@ -28,20 +27,17 @@ export default function Layout() {
 		}
 	}, [fontsLoaded, fontsError]);
 
-	const party = useContext(PartyContext);
 	if (!fontsLoaded || fontsError) return null;
 
 	return (
 		<SafeAreaProvider onLayout={onLayoutRootView}>
 			<QueryClientProvider client={queryClient}>
-				<PartyContext.Provider value={party}>
-					<Stack
-						screenOptions={{
-							title: 'Pokemon'
-						}}>
-						<Stack.Screen name='(pokemon)' />
-					</Stack>
-				</PartyContext.Provider>
+				<Stack
+					screenOptions={{
+						title: 'Pokemon'
+					}}>
+					<Stack.Screen name='(pokemon)' />
+				</Stack>
 			</QueryClientProvider>
 		</SafeAreaProvider>
 	);
