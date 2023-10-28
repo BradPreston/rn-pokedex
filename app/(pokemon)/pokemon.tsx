@@ -12,13 +12,16 @@ export default memo(function AllPokemon() {
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [clicked, setClicked] = useState(false);
 
-	async function handleSearch() {
-		if (data) {
-			const pkmn = data.filter((pkmn) =>
-				pkmn.name.startsWith(searchPhrase.toLowerCase())
-			);
-			setSearchResults(pkmn);
-		}
+	function handleSearch() {
+		const pkmn = data?.filter((pkmn) =>
+			pkmn.name.startsWith(searchPhrase.toLowerCase())
+		);
+		if (pkmn) setSearchResults(pkmn);
+	}
+
+	function handleResetSearch() {
+		setSearchPhrase('');
+		setSearchResults(null);
 	}
 
 	const renderItem = useCallback<ListRenderItem<Pokemon>>(
@@ -51,13 +54,23 @@ export default memo(function AllPokemon() {
 					searchPhrase={searchPhrase}
 					setSearchPhrase={setSearchPhrase}
 					handleSearch={handleSearch}
+					handleResetSearch={handleResetSearch}
 				/>
-				<FlatList
-					showsVerticalScrollIndicator={false}
-					data={searchResults ? searchResults : data}
-					renderItem={renderItem}
-					keyExtractor={(item) => item.name}
-				/>
+				{searchResults ? (
+					<FlatList
+						showsVerticalScrollIndicator={false}
+						data={searchResults}
+						renderItem={renderItem}
+						keyExtractor={(item) => item.name}
+					/>
+				) : (
+					<FlatList
+						showsVerticalScrollIndicator={false}
+						data={data}
+						renderItem={renderItem}
+						keyExtractor={(item) => item.name}
+					/>
+				)}
 			</View>
 		);
 	}
