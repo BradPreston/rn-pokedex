@@ -47,7 +47,11 @@ export default memo(function AllPokemon() {
 
 	if (status === 'success') {
 		return (
-			<View>
+			<View className='w-11/12'>
+				<Text className='self-center text-base my-5'>
+					Select a Pokemon from the list below to add to your party (
+					<Text className='italic'>limit 6 per party</Text>)
+				</Text>
 				<SearchBar
 					clicked={clicked}
 					setCLicked={setClicked}
