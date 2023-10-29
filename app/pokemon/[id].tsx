@@ -6,16 +6,26 @@ import { party } from '../../storage';
 import TypeChip from '../../components/TypeChip';
 import PartyButton from '../../components/PartyButton';
 import { convertMetersToFeetString, convertToPounds } from '../../internal';
+import { useState } from 'react';
 
 export default function PokemonById() {
 	const { id, inParty } = useLocalSearchParams<{
 		id: string;
 		inParty?: string;
 	}>();
+	const [removedPokemon, setRemovedPokemon] = useState(false);
 	const { refetch } = useQuery('pokemonParty');
-	const addToPartyMutation = useMutation('pokemonById', party.insert);
+	const addToPartyMutation = useMutation('pokemonById', party.insert, {
+		onSuccess: () => {
+			setRemovedPokemon(false);
+			refetch();
+		}
+	});
 	const removeFromPartyMutation = useMutation('pokemonParty', party.removeOne, {
-		onSuccess: () => refetch()
+		onSuccess: () => {
+			setRemovedPokemon(true);
+			refetch();
+		}
 	});
 
 	if (!id) return;
@@ -77,7 +87,7 @@ export default function PokemonById() {
 					</Text>
 
 					<View className='flex items-center mt-5'>
-						{inParty ? (
+						{inParty && !removedPokemon ? (
 							<PartyButton
 								removeFromParty={() => removeFromPartyMutation.mutate(name)}
 								styles='bg-red-700 rounded-md flex items-center justify-center w-full py-3'
