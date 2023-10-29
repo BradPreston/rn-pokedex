@@ -14,7 +14,7 @@ export default memo(function AllPokemon() {
 
 	function handleSearch() {
 		const pkmn = data?.filter((pkmn) =>
-			pkmn.name.startsWith(searchPhrase.toLowerCase())
+			pkmn.name.startsWith(searchPhrase.toLowerCase().trim())
 		);
 		if (pkmn) setSearchResults(pkmn);
 	}
