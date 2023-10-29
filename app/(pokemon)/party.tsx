@@ -1,9 +1,11 @@
 import { Link, useFocusEffect } from 'expo-router';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, ListRenderItem } from 'react-native';
 import { useQuery } from 'react-query';
 import { party } from '../../storage';
 import { useRef, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ListItem from '../../components/ListItem';
+import { Pokemon, SimplePokemon } from '../../types';
 
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 	const firstTimeRef = useRef(true);
@@ -29,6 +31,11 @@ export default function Party() {
 		refetch();
 	}
 
+	const renderItem = useCallback<ListRenderItem<SimplePokemon>>(
+		({ item }) => <ListItem id={item.id} name={item.name} inParty={true} />,
+		[]
+	);
+
 	if (status === 'success') {
 		return (
 			<View>
@@ -36,7 +43,7 @@ export default function Party() {
 				<FlatList
 					data={data}
 					keyExtractor={(item) => item.name}
-					renderItem={({ item }) => <Text>{item.name}</Text>}
+					renderItem={renderItem}
 				/>
 				<Link className='py-5' href='/(pokemon)/pokemon'>
 					Add pokemon to your party
