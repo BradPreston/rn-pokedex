@@ -1,10 +1,10 @@
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import getPokemonById from '../../graphql/getPokemonById';
 import { useQuery, useMutation } from 'react-query';
 import { party } from '../../storage';
 import TypeChip from '../../components/TypeChip';
-import Button from '../../components/Button';
+import PartyButton from '../../components/PartyButton';
 
 function convertMetersToFeetString(height: number): string {
 	const inches = Math.round((height / 10) * 39.37);
@@ -18,10 +18,18 @@ function convertToPounds(weight: number): number {
 }
 
 export default function PokemonById() {
-	const { id } = useLocalSearchParams<{ id: string }>();
-	const mutation = useMutation('pokemonById', party.insert);
+	const { id, inParty } = useLocalSearchParams<{
+		id: string;
+		inParty?: string;
+	}>();
+	const { refetch } = useQuery('pokemonParty');
+	const addToPartyMutation = useMutation('pokemonById', party.insert);
+	const removeFromPartyMutation = useMutation('pokemonParty', party.removeOne, {
+		onSuccess: () => refetch()
+	});
 
 	if (!id) return;
+
 	const numId = parseInt(id);
 	const { data, isLoading, isError, isSuccess } = useQuery('pokemonById', () =>
 		getPokemonById(numId)
@@ -79,10 +87,17 @@ export default function PokemonById() {
 					</Text>
 
 					<View className='flex items-center mt-5'>
-						<Button
-							addToParty={() => mutation.mutate({ id, name })}
-							styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
-						/>
+						{inParty ? (
+							<PartyButton
+								removeFromParty={() => removeFromPartyMutation.mutate(name)}
+								styles='bg-red-700 rounded-md flex items-center justify-center w-full py-3'
+							/>
+						) : (
+							<PartyButton
+								addToParty={() => addToPartyMutation.mutate({ id, name })}
+								styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							/>
+						)}
 					</View>
 				</View>
 			</View>
