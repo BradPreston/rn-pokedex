@@ -7,9 +7,10 @@ import getPokemonById from '../graphql/getPokemonById';
 type Props = {
 	id: number;
 	name: string;
+	inParty?: boolean;
 };
 
-export default memo(function ListItem({ id, name }: Props) {
+export default memo(function ListItem({ id, name, inParty }: Props) {
 	const clientQuery = useQueryClient();
 
 	return (
@@ -21,7 +22,7 @@ export default memo(function ListItem({ id, name }: Props) {
 				}}
 			/>
 			<Link
-				href={`/pokemon/${id}`}
+				href={`/pokemon/${id}${inParty ? '?inParty=true' : ''}`}
 				onPress={async () =>
 					await clientQuery.prefetchQuery('pokemonById', () =>
 						getPokemonById(id)
