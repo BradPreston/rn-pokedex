@@ -5,17 +5,7 @@ import { useQuery, useMutation } from 'react-query';
 import { party } from '../../storage';
 import TypeChip from '../../components/TypeChip';
 import PartyButton from '../../components/PartyButton';
-
-function convertMetersToFeetString(height: number): string {
-	const inches = Math.round((height / 10) * 39.37);
-	const feet = Math.floor(inches / 12);
-	return `${feet}' ${inches % 12}"`;
-}
-
-function convertToPounds(weight: number): number {
-	const pounds = (weight / 10) * 2.205;
-	return parseFloat(pounds.toFixed(1));
-}
+import { convertMetersToFeetString, convertToPounds } from '../../internal';
 
 export default function PokemonById() {
 	const { id, inParty } = useLocalSearchParams<{
