@@ -31,13 +31,13 @@ export default function SearchBar({
 					onChangeText={setSearchPhrase}
 					onFocus={() => setCLicked(true)}
 					onSubmitEditing={handleSearch}
-					className='w-full'
+					className='w-full ml-5'
 				/>
 				{clicked && (
 					<Ionicons
 						name='close-circle'
 						size={20}
-						className='text-gray-800'
+						className='text-gray-800 mr-5'
 						onPress={handleResetSearch}
 					/>
 				)}
