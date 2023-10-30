@@ -9,12 +9,14 @@ import { convertMetersToFeetString, convertToPounds } from '../../internal';
 import { useState } from 'react';
 
 export default function PokemonById() {
-	const { id, inParty } = useLocalSearchParams<{
+	const { id } = useLocalSearchParams<{
 		id: string;
-		inParty?: string;
 	}>();
 	const [removedPokemon, setRemovedPokemon] = useState(false);
-	const { refetch } = useQuery('pokemonParty');
+	const { data: pokemonParty, refetch } = useQuery(
+		'pokemonParty',
+		party.getAll
+	);
 	const addToPartyMutation = useMutation('pokemonById', party.insert, {
 		onSuccess: () => {
 			setRemovedPokemon(false);
@@ -56,6 +58,8 @@ export default function PokemonById() {
 		const pokemonInfo = pokemon.pokemon.nodes[0];
 		const { id, name } = pokemonInfo;
 
+		const isInParty = pokemonParty?.filter((pkmn) => pkmn.name === name)[0];
+
 		return (
 			<View className='flex flex-col'>
 				<View className='w-11/12 self-center flex'>
@@ -87,12 +91,25 @@ export default function PokemonById() {
 					</Text>
 
 					<View className='flex items-center mt-5'>
-						{inParty && !removedPokemon ? (
+						{isInParty && !removedPokemon && (
 							<PartyButton
 								removeFromParty={() => removeFromPartyMutation.mutate(name)}
 								styles='bg-red-700 rounded-md flex items-center justify-center w-full py-3'
 							/>
-						) : (
+						)}
+						{isInParty && removedPokemon && (
+							<PartyButton
+								addToParty={() => addToPartyMutation.mutate({ id, name })}
+								styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							/>
+						)}
+						{!isInParty && !removedPokemon && (
+							<PartyButton
+								addToParty={() => addToPartyMutation.mutate({ id, name })}
+								styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							/>
+						)}
+						{!isInParty && removedPokemon && (
 							<PartyButton
 								addToParty={() => addToPartyMutation.mutate({ id, name })}
 								styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
