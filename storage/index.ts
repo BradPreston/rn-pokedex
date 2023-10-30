@@ -11,7 +11,8 @@ function Party() {
 			let partyJSON = await SecureStore.getItemAsync('party');
 			if (!partyJSON) partyJSON = JSON.stringify({});
 			const party: Party = JSON.parse(partyJSON);
-			confirmOnlySixInParty();
+			const partyTotal = await confirmOnlySixInParty();
+			if (!partyTotal.lessThanSix) throw new RangeError(partyTotal.err);
 			if (party[value.name]) {
 				throw new ReferenceError(
 					`A Pokemon with the name \"${value.name}\" is already in your party`
@@ -80,8 +81,17 @@ function Party() {
 			const count = Object.keys(party).length;
 			if (count >= 6)
 				throw new RangeError('You already have six pokemon in your party');
+			return {
+				err: undefined,
+				lessThanSix: true
+			};
 		} catch (err) {
 			console.error(err);
+
+			return {
+				err: err instanceof RangeError ? err.message : 'something went wrong',
+				lessThanSix: false
+			};
 		}
 	}
 
