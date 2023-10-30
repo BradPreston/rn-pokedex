@@ -27,6 +27,7 @@ export default function SearchBar({
 				}`}>
 				<TextInput
 					placeholder='Search'
+					placeholderTextColor='#333333'
 					value={searchPhrase}
 					onChangeText={setSearchPhrase}
 					onFocus={() => setCLicked(true)}
