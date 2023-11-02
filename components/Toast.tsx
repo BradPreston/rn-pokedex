@@ -36,4 +36,4 @@ function ToastPopUp() {
 	};
 }
 
-export const toast = ToastPopUp();
+export default ToastPopUp();

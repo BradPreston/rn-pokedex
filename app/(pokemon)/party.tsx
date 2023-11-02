@@ -1,13 +1,11 @@
 import { Link, useFocusEffect } from 'expo-router';
-import { Text, View, FlatList, ListRenderItem } from 'react-native';
+import { Text, FlatList, ListRenderItem } from 'react-native';
 import { useQuery } from 'react-query';
-import { party } from '../../storage';
+import { party } from '@storage';
 import { useRef, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ListItem from '../../components/ListItem';
-import { SimplePokemon } from '../../types';
-import Heading from '../../components/Heading';
-import Container from '../../components/Container';
+import { SimplePokemon } from '@types';
+import { Container, ListItem, Heading } from '@components';
 
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 	const firstTimeRef = useRef(true);

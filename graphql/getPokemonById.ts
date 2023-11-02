@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import client from './client';
-import { Species } from '../types';
+import { Species } from '@types';
 
 export default async function getPokemonById(id: number): Promise<Species[]> {
 	try {

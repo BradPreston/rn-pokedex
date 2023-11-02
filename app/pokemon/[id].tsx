@@ -1,14 +1,11 @@
 import { View, Text, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import getPokemonById from '../../graphql/getPokemonById';
+import { getPokemonById } from '@graphql';
 import { useQuery, useMutation } from 'react-query';
-import { party } from '../../storage';
-import TypeChip from '../../components/TypeChip';
-import PartyButton from '../../components/PartyButton';
-import { convertMetersToFeetString, convertToPounds } from '../../internal';
+import { party } from '@storage';
+import { convertMetersToFeetString, convertToPounds } from '@internal';
 import { useState } from 'react';
-import { toast } from '../../components/Toast';
-import Container from '../../components/Container';
+import { toast, Container, PartyButton, TypeChip } from '@components';
 
 export default function PokemonById() {
 	const { id } = useLocalSearchParams<{

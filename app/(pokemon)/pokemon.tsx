@@ -1,11 +1,9 @@
 import { View, FlatList, Text, ListRenderItem } from 'react-native';
-import getAllPokemon from '../../graphql/getAllPokemon';
-import ListItem from '../../components/ListItem';
+import { getAllPokemon } from '@graphql';
 import { useQuery } from 'react-query';
 import { memo, useCallback, useState } from 'react';
-import { Pokemon } from '../../types';
-import SearchBar from '../../components/SearchBar';
-import Container from '../../components/Container';
+import { Pokemon } from '@types';
+import { SearchBar, Container, ListItem } from '@components';
 
 export default memo(function AllPokemon() {
 	const { data, status } = useQuery('allPokemon', getAllPokemon);

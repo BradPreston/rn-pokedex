@@ -1,4 +1,4 @@
-import { SimplePokemon } from '../types';
+import { SimplePokemon } from '@types';
 import * as SecureStore from 'expo-secure-store';
 
 type Party = {

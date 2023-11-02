@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { memo } from 'react';
 import { Image, View, Text } from 'react-native';
 import { useQueryClient } from 'react-query';
-import getPokemonById from '../graphql/getPokemonById';
+import { getPokemonById } from '@graphql';
 
 type Props = {
 	id: number;
