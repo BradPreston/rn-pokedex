@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { memo, useCallback, useState } from 'react';
 import { Pokemon } from '../../types';
 import SearchBar from '../../components/SearchBar';
+import Container from '../../components/Container';
 
 export default memo(function AllPokemon() {
 	const { data, status } = useQuery('allPokemon', getAllPokemon);
@@ -47,8 +48,8 @@ export default memo(function AllPokemon() {
 
 	if (status === 'success') {
 		return (
-			<View className='w-11/12'>
-				<Text className='self-center text-base my-5'>
+			<Container>
+				<Text className='text-base my-5'>
 					Select a Pokemon from the list below to add to your party (
 					<Text className='italic'>limit 6 per party</Text>)
 				</Text>
@@ -75,7 +76,7 @@ export default memo(function AllPokemon() {
 						keyExtractor={(item) => item.name}
 					/>
 				)}
-			</View>
+			</Container>
 		);
 	}
 });

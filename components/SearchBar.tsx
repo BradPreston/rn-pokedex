@@ -20,7 +20,7 @@ export default function SearchBar({
 	handleResetSearch
 }: Props) {
 	return (
-		<View className='m-4 justify-between items-center flex-row w-full'>
+		<View className='m-4 justify-between items-center flex-row w-full self-center'>
 			<View
 				className={`p-3 flex-row bg-gray-200 rounded-2xl items-center ${
 					clicked ? 'w-3/4 justify-evenly' : 'w-full'

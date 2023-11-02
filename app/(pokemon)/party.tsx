@@ -5,7 +5,9 @@ import { party } from '../../storage';
 import { useRef, useCallback } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ListItem from '../../components/ListItem';
-import { Pokemon, SimplePokemon } from '../../types';
+import { SimplePokemon } from '../../types';
+import Heading from '../../components/Heading';
+import Container from '../../components/Container';
 
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 	const firstTimeRef = useRef(true);
@@ -38,8 +40,8 @@ export default function Party() {
 
 	if (status === 'success') {
 		return (
-			<View>
-				<Text>Your Party</Text>
+			<Container>
+				<Heading title='Your Party' />
 				<FlatList
 					data={data}
 					keyExtractor={(item) => item.name}
@@ -51,7 +53,7 @@ export default function Party() {
 				<TouchableOpacity onPress={clearPokemonParty}>
 					<Text>Remove All Pokemon From Party</Text>
 				</TouchableOpacity>
-			</View>
+			</Container>
 		);
 	}
 }
