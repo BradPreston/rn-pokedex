@@ -32,7 +32,7 @@ export default function Party() {
 	}
 
 	const renderItem = useCallback<ListRenderItem<SimplePokemon>>(
-		({ item }) => <ListItem id={item.id} name={item.name} inParty={true} />,
+		({ item }) => <ListItem id={item.id} name={item.name} />,
 		[]
 	);
 
