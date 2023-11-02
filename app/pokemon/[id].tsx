@@ -7,6 +7,7 @@ import TypeChip from '../../components/TypeChip';
 import PartyButton from '../../components/PartyButton';
 import { convertMetersToFeetString, convertToPounds } from '../../internal';
 import { useState } from 'react';
+import { toast } from '../../components/Toast';
 
 export default function PokemonById() {
 	const { id } = useLocalSearchParams<{
@@ -17,7 +18,7 @@ export default function PokemonById() {
 		'pokemonParty',
 		party.getAll
 	);
-	const addToPartyMutation = useMutation('pokemonById', party.insert, {
+	const addToPartyMutation = useMutation('pokemonParty', party.insert, {
 		onSuccess: () => {
 			setRemovedPokemon(false);
 			refetch();
@@ -29,6 +30,18 @@ export default function PokemonById() {
 			refetch();
 		}
 	});
+
+	if (addToPartyMutation.status === 'error') {
+		if (addToPartyMutation.error instanceof Error) {
+			toast.error(addToPartyMutation.error.message);
+		}
+	}
+
+	if (removeFromPartyMutation.status === 'error') {
+		if (removeFromPartyMutation.error instanceof Error) {
+			toast.error(removeFromPartyMutation.error.message);
+		}
+	}
 
 	if (!id) return;
 
@@ -59,6 +72,12 @@ export default function PokemonById() {
 		const { id, name } = pokemonInfo;
 
 		const isInParty = pokemonParty?.filter((pkmn) => pkmn.name === name)[0];
+		if (addToPartyMutation.status === 'success') {
+			toast.success(addToPartyMutation.data);
+		}
+		if (removeFromPartyMutation.status === 'success') {
+			toast.success(removeFromPartyMutation.data);
+		}
 
 		return (
 			<View className='flex flex-col'>
