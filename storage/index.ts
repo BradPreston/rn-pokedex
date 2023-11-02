@@ -85,8 +85,13 @@ function Party() {
 		}
 	}
 
-	async function removeAll() {
-		await SecureStore.setItemAsync('party', JSON.stringify({}));
+	async function removeAll(): Promise<void> {
+		try {
+			await SecureStore.setItemAsync('party', JSON.stringify({}));
+		} catch (err) {
+			if (err instanceof Error) throw new Error(err.message);
+			throw new Error('Something went wrong');
+		}
 	}
 
 	return {
