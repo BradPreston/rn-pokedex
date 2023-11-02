@@ -4,6 +4,9 @@ import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCallback } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function Layout() {
 	const [fontsLoaded, fontsError] = useFonts({
@@ -32,12 +35,14 @@ export default function Layout() {
 	return (
 		<SafeAreaProvider onLayout={onLayoutRootView}>
 			<QueryClientProvider client={queryClient}>
-				<Stack
-					screenOptions={{
-						title: 'Pokemon'
-					}}>
-					<Stack.Screen name='(pokemon)' />
-				</Stack>
+				<RootSiblingParent>
+					<Stack
+						screenOptions={{
+							title: 'Pokemon'
+						}}>
+						<Stack.Screen name='(pokemon)' />
+					</Stack>
+				</RootSiblingParent>
 			</QueryClientProvider>
 		</SafeAreaProvider>
 	);
