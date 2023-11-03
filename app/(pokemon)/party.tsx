@@ -1,9 +1,8 @@
-import { Link, useFocusEffect } from 'expo-router';
-import { Text, FlatList, ListRenderItem } from 'react-native';
+import { Link, Redirect, useFocusEffect } from 'expo-router';
+import { Text, FlatList, ListRenderItem, View, Pressable } from 'react-native';
 import { useQuery } from 'react-query';
 import { party } from '@storage';
 import { useRef, useCallback } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SimplePokemon } from '@types';
 import { Container, ListItem, Heading } from '@components';
 
@@ -39,18 +38,27 @@ export default function Party() {
 	if (status === 'success') {
 		return (
 			<Container>
-				<Heading title='Your Party' />
-				<FlatList
-					data={data}
-					keyExtractor={(item) => item.name}
-					renderItem={renderItem}
-				/>
-				<Link className='py-5' href='/(pokemon)/pokemon'>
-					Add pokemon to your party
-				</Link>
-				<TouchableOpacity onPress={clearPokemonParty}>
-					<Text>Remove All Pokemon From Party</Text>
-				</TouchableOpacity>
+				<View className='py-5'>
+					{data.map(({ id, name }) => (
+						<ListItem key={name} id={id} name={name} />
+					))}
+				</View>
+				<View className='flex gap-5'>
+					<Pressable className='bg-slate-700  rounded-md flex items-center justify-center w-full py-3'>
+						<Link href='/(pokemon)/pokemon'>
+							<Text className='text-white text-lg'>
+								Add pokemon to your party
+							</Text>
+						</Link>
+					</Pressable>
+					<Pressable
+						onPress={clearPokemonParty}
+						className='bg-red-700  rounded-md flex items-center justify-center w-full py-3'>
+						<Text className='text-white text-lg'>
+							Remove All Pokemon From Party
+						</Text>
+					</Pressable>
+				</View>
 			</Container>
 		);
 	}
