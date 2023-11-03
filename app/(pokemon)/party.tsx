@@ -1,10 +1,9 @@
-import { Link, Redirect, useFocusEffect } from 'expo-router';
-import { Text, FlatList, ListRenderItem, View, Pressable } from 'react-native';
+import { Link, useFocusEffect } from 'expo-router';
+import { Text, View, Pressable } from 'react-native';
 import { useQuery } from 'react-query';
 import { party } from '@storage';
 import { useRef, useCallback } from 'react';
-import { SimplePokemon } from '@types';
-import { Container, ListItem, Heading } from '@components';
+import { Container, ListItem } from '@components';
 
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 	const firstTimeRef = useRef(true);
@@ -29,11 +28,6 @@ export default function Party() {
 		await party.removeAll();
 		refetch();
 	}
-
-	const renderItem = useCallback<ListRenderItem<SimplePokemon>>(
-		({ item }) => <ListItem id={item.id} name={item.name} />,
-		[]
-	);
 
 	if (status === 'success') {
 		return (
