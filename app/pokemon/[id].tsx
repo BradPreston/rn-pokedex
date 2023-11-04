@@ -125,7 +125,7 @@ export default function PokemonById() {
 					{isInParty && !removedPokemon && (
 						<PartyButton
 							removeFromParty={() => setShowModal(true)}
-							styles='bg-red-700 rounded-md flex items-center justify-center w-full py-3'
+							styles='bg-pokemon-red rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 					{isInParty && removedPokemon && (

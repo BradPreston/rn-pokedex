@@ -58,7 +58,7 @@ export default function Party() {
 					{data.length !== 0 && (
 						<Pressable
 							onPress={() => setShowModal(true)}
-							className='bg-red-700  rounded-md flex items-center justify-center w-full py-3'>
+							className='bg-pokemon-red  rounded-md flex items-center justify-center w-full py-3'>
 							<Text className='text-white text-lg'>
 								Remove All Pokemon From Party
 							</Text>

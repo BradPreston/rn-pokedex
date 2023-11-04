@@ -19,12 +19,12 @@ export default function AreYouSureModal({
 					<Text className='text-black text-lg'>Are you sure?</Text>
 					<View className='flex-row justify-between gap-6 mt-5'>
 						<Pressable onPress={() => handleCancel()} className='flex-1'>
-							<Text className='bg-yellow-600 text-white py-2 text-center'>
+							<Text className='bg-pokemon-gold text-white py-2 text-center'>
 								Cancel
 							</Text>
 						</Pressable>
 						<Pressable onPress={() => handleConfirm()} className='flex-1'>
-							<Text className='bg-red-700 text-white py-2 text-center'>
+							<Text className='bg-pokemon-red text-white py-2 text-center'>
 								Yes
 							</Text>
 						</Pressable>

@@ -38,7 +38,7 @@ export default function SearchBar({
 					<Ionicons
 						name='close-circle'
 						size={20}
-						className='text-gray-800 mr-5'
+						className='text-pokemon-grey mr-5'
 						onPress={handleResetSearch}
 					/>
 				)}
