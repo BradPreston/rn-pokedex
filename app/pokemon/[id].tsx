@@ -5,9 +5,16 @@ import { useQuery, useMutation } from 'react-query';
 import { party } from '@storage';
 import { convertMetersToFeetString, convertToPounds } from '@internal';
 import { useState } from 'react';
-import { toast, Container, PartyButton, TypeChip } from '@components';
+import {
+	toast,
+	Container,
+	PartyButton,
+	TypeChip,
+	AreYouSureModal
+} from '@components';
 
 export default function PokemonById() {
+	const [showModal, setShowModal] = useState(false);
 	const { id } = useLocalSearchParams<{
 		id: string;
 	}>();
@@ -79,6 +86,16 @@ export default function PokemonById() {
 
 		return (
 			<Container>
+				{showModal && (
+					<AreYouSureModal
+						showModal={showModal}
+						handleCancel={() => setShowModal(false)}
+						handleConfirm={() => {
+							removeFromPartyMutation.mutate(name);
+							setShowModal(false);
+						}}
+					/>
+				)}
 				<Image
 					className='w-96 h-96 self-center'
 					source={{
@@ -107,7 +124,7 @@ export default function PokemonById() {
 				<View className='flex items-center mt-5'>
 					{isInParty && !removedPokemon && (
 						<PartyButton
-							removeFromParty={() => removeFromPartyMutation.mutate(name)}
+							removeFromParty={() => setShowModal(true)}
 							styles='bg-red-700 rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
