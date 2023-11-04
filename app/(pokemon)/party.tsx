@@ -42,6 +42,7 @@ export default function Party() {
 					/>
 				)}
 				<View className='py-5'>
+					{data.length === 0 && <Text>Your party is empty</Text>}
 					{data.map(({ id, name }) => (
 						<ListItem key={name} id={id} name={name} />
 					))}
@@ -54,13 +55,15 @@ export default function Party() {
 							</Text>
 						</Link>
 					</Pressable>
-					<Pressable
-						onPress={() => setShowModal(true)}
-						className='bg-red-700  rounded-md flex items-center justify-center w-full py-3'>
-						<Text className='text-white text-lg'>
-							Remove All Pokemon From Party
-						</Text>
-					</Pressable>
+					{data.length !== 0 && (
+						<Pressable
+							onPress={() => setShowModal(true)}
+							className='bg-red-700  rounded-md flex items-center justify-center w-full py-3'>
+							<Text className='text-white text-lg'>
+								Remove All Pokemon From Party
+							</Text>
+						</Pressable>
+					)}
 				</View>
 			</Container>
 		);
