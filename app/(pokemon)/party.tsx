@@ -2,8 +2,8 @@ import { Link, useFocusEffect } from 'expo-router';
 import { Text, View, Pressable } from 'react-native';
 import { useQuery } from 'react-query';
 import { party } from '@storage';
-import { useRef, useCallback } from 'react';
-import { Container, ListItem } from '@components';
+import { useRef, useCallback, useState } from 'react';
+import { Container, ListItem, AreYouSureModal } from '@components';
 
 export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 	const firstTimeRef = useRef(true);
@@ -21,17 +21,26 @@ export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 }
 
 export default function Party() {
+	const [showModal, setShowModal] = useState(false);
 	const { data, status, refetch } = useQuery('pokemonParty', party.getAll);
 	useRefreshOnFocus(refetch);
 
 	async function clearPokemonParty() {
 		await party.removeAll();
+		setShowModal(false);
 		refetch();
 	}
 
 	if (status === 'success') {
 		return (
 			<Container>
+				{showModal && (
+					<AreYouSureModal
+						showModal={showModal}
+						handleCancel={() => setShowModal(false)}
+						handleConfirm={clearPokemonParty}
+					/>
+				)}
 				<View className='py-5'>
 					{data.map(({ id, name }) => (
 						<ListItem key={name} id={id} name={name} />
@@ -46,7 +55,7 @@ export default function Party() {
 						</Link>
 					</Pressable>
 					<Pressable
-						onPress={clearPokemonParty}
+						onPress={() => setShowModal(true)}
 						className='bg-red-700  rounded-md flex items-center justify-center w-full py-3'>
 						<Text className='text-white text-lg'>
 							Remove All Pokemon From Party
