@@ -131,19 +131,19 @@ export default function PokemonById() {
 					{isInParty && removedPokemon && (
 						<PartyButton
 							addToParty={() => addToPartyMutation.mutate({ id, name })}
-							styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 					{!isInParty && !removedPokemon && (
 						<PartyButton
 							addToParty={() => addToPartyMutation.mutate({ id, name })}
-							styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 					{!isInParty && removedPokemon && (
 						<PartyButton
 							addToParty={() => addToPartyMutation.mutate({ id, name })}
-							styles='bg-slate-700 rounded-md flex items-center justify-center w-full py-3'
+							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 				</View>
