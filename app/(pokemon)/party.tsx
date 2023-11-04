@@ -48,10 +48,17 @@ export default function Party() {
 					))}
 				</View>
 				<View className='flex gap-5'>
-					<Pressable className='bg-slate-700  rounded-md flex items-center justify-center w-full py-3'>
-						<Link href='/(pokemon)/pokemon'>
-							<Text className='text-white text-lg'>
-								Add pokemon to your party
+					<Pressable
+						className={`${
+							data.length >= 6 ? 'opacity-50' : ''
+						} bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3`}>
+						<Link
+							href='/(pokemon)/pokemon'
+							disabled={data.length >= 6 ? true : false}>
+							<Text className='text-pokemon-white text-lg'>
+								{data.length >= 6
+									? 'Your party is full'
+									: 'Add pokemon to your party'}
 							</Text>
 						</Link>
 					</Pressable>
@@ -59,7 +66,7 @@ export default function Party() {
 						<Pressable
 							onPress={() => setShowModal(true)}
 							className='bg-pokemon-red  rounded-md flex items-center justify-center w-full py-3'>
-							<Text className='text-white text-lg'>
+							<Text className='text-pokemon-white text-lg'>
 								Remove All Pokemon From Party
 							</Text>
 						</Pressable>
