@@ -16,7 +16,10 @@ export default function AreYouSureModal({
 		<View className='absolute'>
 			<Modal isVisible={showModal}>
 				<View className='w-4/5 bg-pokemon-white self-center py-5 px-5 rounded-md'>
-					<Text className='text-black text-lg'>Are you sure?</Text>
+					<Text className='text-pokemon-black font-bold text-lg'>
+						Are you sure?
+					</Text>
+					<Text className='italic'>This cannot be undone</Text>
 					<View className='flex-row justify-between gap-6 mt-5'>
 						<Pressable onPress={() => handleCancel()} className='flex-1'>
 							<Text className='bg-pokemon-gold text-pokemon-white py-2 text-center'>
