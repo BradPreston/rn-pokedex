@@ -20,8 +20,8 @@ type TestSpecies = {
 
 describe('useGQLQuery hook', () => {
 	afterEach(() => {
-		queryClient.clear()
-	})
+		queryClient.clear();
+	});
 	it('[allPokemon] returns all Pokemon successfully', async () => {
 		const { result } = renderHook(
 			() =>
