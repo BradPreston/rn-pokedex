@@ -12,6 +12,10 @@ export type Pokemon = {
 	pokemonSprites: Sprite[];
 };
 
+export type SpeciesArr = {
+	species: Species[];
+};
+
 export type Species = {
 	name: string;
 	is_legendary: boolean;
@@ -23,6 +27,10 @@ export type Species = {
 		name: string;
 	};
 	flavorText: FlavorText[];
+};
+
+export type SimplePokemonArr = {
+	pokemon: SimplePokemon[];
 };
 
 export type SimplePokemon = {
