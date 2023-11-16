@@ -10,6 +10,7 @@
 			"@storage": ["./storage"],
 			"@types": ["./types"],
 			"@graphql": ["./graphql"],
+			"@graphql/*": ["./graphql/*"],
 			"@internal": ["./internal"],
 			"@queries": ["./queries"],
 			"@hooks": ["./hooks"]
