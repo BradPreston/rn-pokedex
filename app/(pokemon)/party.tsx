@@ -1,6 +1,6 @@
 import { Link, useFocusEffect } from 'expo-router';
 import { Text, View, Pressable } from 'react-native';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { party } from '@storage';
 import { useRef, useCallback, useState } from 'react';
 import { Container, ListItem, AreYouSureModal } from '@components';
@@ -21,8 +21,12 @@ export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
 }
 
 export default function Party() {
+	const clientQuery = useQueryClient();
 	const [showModal, setShowModal] = useState(false);
-	const { data, status, refetch } = useQuery('pokemonParty', party.getAll);
+	const { data, status, refetch } = useQuery({
+		queryKey: ['pokemonParty'],
+		queryFn: party.getAll
+	});
 	useRefreshOnFocus(refetch);
 
 	async function clearPokemonParty() {
@@ -44,7 +48,12 @@ export default function Party() {
 				<View className='py-5'>
 					{data.length === 0 && <Text>Your party is empty</Text>}
 					{data.map(({ id, name }) => (
-						<ListItem key={name} id={id} name={name} />
+						<ListItem
+							key={name}
+							id={id}
+							name={name}
+							clientQuery={clientQuery}
+						/>
 					))}
 				</View>
 				<View className='flex gap-5'>

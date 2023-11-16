@@ -3,7 +3,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useCallback } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -17,7 +17,6 @@ export default function Layout() {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
-				cacheTime: 0,
 				staleTime: 0,
 				refetchOnWindowFocus: true
 			}
