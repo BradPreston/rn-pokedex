@@ -1,18 +1,21 @@
 import { View, FlatList, Text, ListRenderItem } from 'react-native';
-import { getAllPokemon } from '@graphql';
-import { useQuery } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { memo, useCallback, useState } from 'react';
-import { Pokemon } from '@types';
+import { SimplePokemon } from '@types';
 import { SearchBar, Container, ListItem } from '@components';
+import { useAllPokemon } from '@hooks';
 
 export default memo(function AllPokemon() {
-	const { data, status } = useQuery('allPokemon', getAllPokemon);
-	const [searchResults, setSearchResults] = useState<Pokemon[] | null>(null);
+	const queryClient = useQueryClient();
+	const { data, isError, isLoading, isSuccess, error } = useAllPokemon();
+	const [searchResults, setSearchResults] = useState<SimplePokemon[] | null>(
+		null
+	);
 	const [searchPhrase, setSearchPhrase] = useState('');
 	const [clicked, setClicked] = useState(false);
 
 	function handleSearch() {
-		const pkmn = data?.filter((pkmn) =>
+		const pkmn = data?.pokemon.filter((pkmn: SimplePokemon) =>
 			pkmn.name.startsWith(searchPhrase.toLowerCase().trim())
 		);
 		if (pkmn) setSearchResults(pkmn);
@@ -23,12 +26,14 @@ export default memo(function AllPokemon() {
 		setSearchResults(null);
 	}
 
-	const renderItem = useCallback<ListRenderItem<Pokemon>>(
-		({ item }) => <ListItem id={item.id} name={item.name} />,
+	const renderItem = useCallback<ListRenderItem<SimplePokemon>>(
+		({ item }) => (
+			<ListItem id={item.id} name={item.name} clientQuery={queryClient} />
+		),
 		[]
 	);
 
-	if (status === 'loading') {
+	if (isLoading) {
 		return (
 			<View>
 				<Text>Loading...</Text>
@@ -36,7 +41,7 @@ export default memo(function AllPokemon() {
 		);
 	}
 
-	if (status === 'error') {
+	if (isError) {
 		return (
 			<View>
 				<Text>An error ocurred</Text>
@@ -44,7 +49,7 @@ export default memo(function AllPokemon() {
 		);
 	}
 
-	if (status === 'success') {
+	if (isSuccess) {
 		return (
 			<Container>
 				<Text className='text-base my-5'>
@@ -69,7 +74,7 @@ export default memo(function AllPokemon() {
 				) : (
 					<FlatList
 						showsVerticalScrollIndicator={false}
-						data={data}
+						data={data.pokemon}
 						renderItem={renderItem}
 						keyExtractor={(item) => item.name}
 					/>

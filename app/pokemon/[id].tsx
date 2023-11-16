@@ -1,7 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { getPokemonById } from '@graphql';
-import { useQuery, useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { party } from '@storage';
 import { convertMetersToFeetString, convertToPounds } from '@internal';
 import { useState } from 'react';
@@ -12,6 +11,8 @@ import {
 	TypeChip,
 	AreYouSureModal
 } from '@components';
+import { useAllPokemon, usePokemonById } from '@hooks';
+import { Pokemon } from '@types';
 
 export default function PokemonById() {
 	const [showModal, setShowModal] = useState(false);
@@ -19,41 +20,45 @@ export default function PokemonById() {
 		id: string;
 	}>();
 	const [removedPokemon, setRemovedPokemon] = useState(false);
-	const { data: pokemonParty, refetch } = useQuery(
-		'pokemonParty',
-		party.getAll
-	);
-	const addToPartyMutation = useMutation('pokemonParty', party.insert, {
-		onSuccess: () => {
-			setRemovedPokemon(false);
-			refetch();
-		}
-	});
-	const removeFromPartyMutation = useMutation('pokemonParty', party.removeOne, {
-		onSuccess: () => {
-			setRemovedPokemon(true);
-			refetch();
-		}
-	});
 
-	if (addToPartyMutation.status === 'error') {
-		if (addToPartyMutation.error instanceof Error) {
-			toast.error(addToPartyMutation.error.message);
-		}
-	}
+	// const { data: pokemonParty, refetch } = useQuery({
+	// 	queryKey: ['pokemonParty'],
+	// 	queryFn: party.getAll
+	// });
+	// const { data: pokemonParty, refetch } = useGQLQuery<Pokemon[]>({
+	// 	key: 'pokemonParty',
+	// 	query: ALL_POKEMON
+	// });
+	// const addToPartyMutation = useMutation({ ['pokemonParty', party.insert, {
+	// 	onSuccess: () => {
+	// 		setRemovedPokemon(false);
+	// 		refetch();
+	// 	}
+	// });
+	// const removeFromPartyMutation = useMutation('pokemonParty', party.removeOne, {
+	// 	onSuccess: () => {
+	// 		setRemovedPokemon(true);
+	// 		refetch();
+	// 	}
+	// });
 
-	if (removeFromPartyMutation.status === 'error') {
-		if (removeFromPartyMutation.error instanceof Error) {
-			toast.error(removeFromPartyMutation.error.message);
-		}
-	}
+	// if (addToPartyMutation.status === 'error') {
+	// 	if (addToPartyMutation.error instanceof Error) {
+	// 		toast.error(addToPartyMutation.error.message);
+	// 	}
+	// }
+
+	// if (removeFromPartyMutation.status === 'error') {
+	// 	if (removeFromPartyMutation.error instanceof Error) {
+	// 		toast.error(removeFromPartyMutation.error.message);
+	// 	}
+	// }
 
 	if (!id) return;
+	const { data: pokemonParty, refetch } = useAllPokemon();
 
 	const numId = parseInt(id);
-	const { data, isLoading, isError, isSuccess } = useQuery('pokemonById', () =>
-		getPokemonById(numId)
-	);
+	const { data, isLoading, isError, isSuccess, error } = usePokemonById(numId);
 
 	if (isLoading) {
 		return (
@@ -64,6 +69,7 @@ export default function PokemonById() {
 	}
 
 	if (isError) {
+		console.log('[id] error:', error);
 		return (
 			<View>
 				<Text>An error ocurred</Text>
@@ -72,17 +78,20 @@ export default function PokemonById() {
 	}
 
 	if (isSuccess) {
-		const pokemon = data[0];
-		const pokemonInfo = pokemon.pokemon.nodes[0];
+		const species = data.species[0];
+		// console.log('pokemon: ', pokemon);
+		const pokemonInfo = species.pokemon.nodes[0];
 		const { id, name } = pokemonInfo;
 
-		const isInParty = pokemonParty?.filter((pkmn) => pkmn.name === name)[0];
-		if (addToPartyMutation.status === 'success') {
-			toast.success(addToPartyMutation.data);
-		}
-		if (removeFromPartyMutation.status === 'success') {
-			toast.success(removeFromPartyMutation.data);
-		}
+		const isInParty = pokemonParty?.pokemon?.filter(
+			(pkmn) => pkmn.name === name
+		)[0];
+		// if (addToPartyMutation.status === 'success') {
+		// 	toast.success(addToPartyMutation.data);
+		// }
+		// if (removeFromPartyMutation.status === 'success') {
+		// 	toast.success(removeFromPartyMutation.data);
+		// }
 
 		return (
 			<Container>
@@ -91,7 +100,7 @@ export default function PokemonById() {
 						showModal={showModal}
 						handleCancel={() => setShowModal(false)}
 						handleConfirm={() => {
-							removeFromPartyMutation.mutate(name);
+							// removeFromPartyMutation.mutate(name);
 							setShowModal(false);
 						}}
 					/>
@@ -102,7 +111,7 @@ export default function PokemonById() {
 						uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
 					}}
 				/>
-				<Text className='capitalize text-4xl my-2'>{pokemon.name}</Text>
+				<Text className='capitalize text-4xl my-2'>{name}</Text>
 				<View className='flex flex-row justify-between'>
 					<View>
 						<Text>Height: {convertMetersToFeetString(pokemonInfo.height)}</Text>
@@ -116,7 +125,7 @@ export default function PokemonById() {
 					</View>
 				</View>
 				<Text className='mt-5'>
-					{pokemon.flavorText[0].flavor_text
+					{species.flavorText[0].flavor_text
 						.replace(/\f/g, ' ')
 						.replace(/\n/g, ' ')}
 				</Text>
@@ -130,19 +139,19 @@ export default function PokemonById() {
 					)}
 					{isInParty && removedPokemon && (
 						<PartyButton
-							addToParty={() => addToPartyMutation.mutate({ id, name })}
+							// addToParty={() => addToPartyMutation.mutate({ id, name })}
 							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 					{!isInParty && !removedPokemon && (
 						<PartyButton
-							addToParty={() => addToPartyMutation.mutate({ id, name })}
+							// addToParty={() => addToPartyMutation.mutate({ id, name })}
 							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
 					{!isInParty && removedPokemon && (
 						<PartyButton
-							addToParty={() => addToPartyMutation.mutate({ id, name })}
+							// addToParty={() => addToPartyMutation.mutate({ id, name })}
 							styles='bg-pokemon-slate rounded-md flex items-center justify-center w-full py-3'
 						/>
 					)}
