@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { party } from '@storage';
 import { convertMetersToFeetString, convertToPounds } from '@internal';
 import { useState } from 'react';
@@ -11,20 +11,21 @@ import {
 	TypeChip,
 	AreYouSureModal
 } from '@components';
-import { useAllPokemon, usePokemonById } from '@hooks';
-import { Pokemon } from '@types';
+import { useAllParty, usePokemonById } from '@hooks';
 
 export default function PokemonById() {
-	const [showModal, setShowModal] = useState(false);
 	const { id } = useLocalSearchParams<{
 		id: string;
 	}>();
+
+	if (!id) return;
+
+	const [showModal, setShowModal] = useState(false);
 	const [removedPokemon, setRemovedPokemon] = useState(false);
 
-	const { data: pokemonParty, refetch } = useQuery({
-		queryKey: ['pokemonParty'],
-		queryFn: party.getAll
-	});
+	const numId = parseInt(id);
+	const { data, isLoading, isError, isSuccess } = usePokemonById(numId);
+	const { data: pokemonParty, refetch } = useAllParty();
 
 	const addToPartyMutation = useMutation({
 		mutationKey: ['pokemonParty'],
@@ -55,11 +56,6 @@ export default function PokemonById() {
 			toast.error(removeFromPartyMutation.error.message);
 		}
 	}
-
-	if (!id) return;
-
-	const numId = parseInt(id);
-	const { data, isLoading, isError, isSuccess } = usePokemonById(numId);
 
 	if (isLoading) {
 		return (
