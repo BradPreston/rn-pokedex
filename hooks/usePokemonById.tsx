@@ -1,5 +1,5 @@
 import request from 'graphql-request';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { UseSuspenseQueryResult, useSuspenseQuery } from '@tanstack/react-query';
 import { graphql } from '../graphql/gql';
 import { SpeciesArr } from '@types';
 
@@ -44,8 +44,8 @@ export function pokemonByIdQueryFunction(id: number) {
 	);
 }
 
-export function usePokemonById(id: number): UseQueryResult<SpeciesArr, Error> {
-	return useQuery({
+export function usePokemonById(id: number): UseSuspenseQueryResult<SpeciesArr, Error> {
+	return useSuspenseQuery({
 		queryKey: ['pokemonById'],
 		queryFn: async () => pokemonByIdQueryFunction(id)
 	});
