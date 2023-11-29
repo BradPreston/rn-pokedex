@@ -13,7 +13,6 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.6",
     "@bacons/mdx": "^0.1.1",
     "@expo/html-elements": "^0.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
