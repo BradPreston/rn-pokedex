@@ -13,7 +13,7 @@ export default function Button({ styles, addToParty, removeFromParty }: Props) {
 	}
 	return (
 		<Pressable className={styles} onPress={handleParty}>
-			<Text className='text-pokemon-white text-lg'>
+			<Text className='text-white text-lg'>
 				{addToParty ? 'Add to Party' : 'Remove From Party'}
 			</Text>
 		</Pressable>

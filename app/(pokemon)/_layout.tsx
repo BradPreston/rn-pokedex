@@ -1,10 +1,8 @@
 import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Text } from 'react-native';
-import { useState } from 'react';
 
 export default function PokemonLayout() {
-	const [active, setActive] = useState();
 	return (
 		<Tabs screenOptions={{ headerShown: false }}>
 			<Tabs.Screen
@@ -12,18 +10,12 @@ export default function PokemonLayout() {
 				options={{
 					title: 'Pokemon',
 					tabBarLabel: ({ focused, children }) => (
-						<Text
-							className={`${
-								focused ? 'text-pokemon-blue' : 'text-pokemon-grey'
-							}`}>
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							{children}
 						</Text>
 					),
 					tabBarIcon: ({ size, focused }) => (
-						<Text
-							className={`${
-								focused ? 'text-pokemon-blue' : 'text-pokemon-grey'
-							}`}>
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							<Ionicons name='list-outline' size={size} />
 						</Text>
 					)
@@ -34,19 +26,13 @@ export default function PokemonLayout() {
 				options={{
 					title: 'Party',
 					tabBarLabel: ({ focused, children }) => (
-						<Text
-							className={`${
-								focused ? 'text-pokemon-blue' : 'text-pokemon-grey'
-							}`}>
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							{children}
 						</Text>
 					),
 
 					tabBarIcon: ({ size, focused }) => (
-						<Text
-							className={`${
-								focused ? 'text-pokemon-blue' : 'text-pokemon-grey'
-							}`}>
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							<Ionicons name='people-outline' size={size} />
 						</Text>
 					)
