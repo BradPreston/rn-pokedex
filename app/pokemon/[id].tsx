@@ -99,9 +99,9 @@ export default function PokemonById() {
 								textShadowColor: '#ffffff',
 								textShadowRadius: 2
 							}}
-							className={`${typeColors[types[0].type.name][
-								'cardBackground'
-							].replace('bg', 'text')} text-9xl w-full font-bold uppercase`}>
+							className={`${
+								typeColors[types[0].type.name]['textColor']
+							} text-9xl w-full font-bold uppercase`}>
 							{name}
 						</Text>
 					</View>

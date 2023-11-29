@@ -34,6 +34,7 @@ export type TypeColors = {
 	[key: string]: {
 		chipBackground: string;
 		cardBackground: string;
+		textColor: string;
 		icon: IconDefinition;
 	};
 };
