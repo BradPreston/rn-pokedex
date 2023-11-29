@@ -1,8 +1,8 @@
-import { SimplePokemon } from '@types';
+import { Pokemon } from '@types';
 import * as SecureStore from 'expo-secure-store';
 
 type Party = {
-	[key: string]: SimplePokemon;
+	[key: string]: Pokemon;
 };
 
 function capitalFirstLetter(value: string): string {
@@ -10,7 +10,7 @@ function capitalFirstLetter(value: string): string {
 }
 
 function Party() {
-	async function insert(value: SimplePokemon): Promise<string> {
+	async function insert(value: Pokemon): Promise<string> {
 		try {
 			let partyJSON = await SecureStore.getItemAsync('party');
 			if (!partyJSON) partyJSON = JSON.stringify({});
@@ -33,7 +33,7 @@ function Party() {
 		}
 	}
 
-	async function getAll(): Promise<SimplePokemon[]> {
+	async function getAll(): Promise<Pokemon[]> {
 		try {
 			let partyJSON = await SecureStore.getItemAsync('party');
 			if (!partyJSON) throw new ReferenceError('No party was found');
@@ -45,7 +45,7 @@ function Party() {
 		}
 	}
 
-	async function getOne(key: string): Promise<SimplePokemon> {
+	async function getOne(key: string): Promise<Pokemon> {
 		try {
 			const partyJSON = await SecureStore.getItemAsync('party');
 			if (!partyJSON) throw new ReferenceError('No party was found');
