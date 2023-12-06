@@ -1,4 +1,5 @@
 {
+  "name": "@repo/pokedex",
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
