@@ -1,80 +1,43 @@
-import { PokemonStore } from '../src';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import React from 'react';
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
-import { act, renderHook, waitFor } from '@testing-library/react-native';
-import { PropsWithChildren } from 'react';
-import { QueryClient } from '@tanstack/react-query';
-import { Pokemon } from '@repo/types';
+import { usePokemonPartyStore } from '../src';
+import { act, renderHook } from '@testing-library/react-native';
+
+const pokemonPartyStore = usePokemonPartyStore();
+const initialState = pokemonPartyStore.getState();
+
+beforeEach(async () => {
+	await act(() => pokemonPartyStore.setState(initialState, true));
+});
 
 describe('usePartyStore', () => {
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				gcTime: 0,
-				retry: false
-			}
-		}
+	it('[party] returns an empty array with no party', async () => {
+		const { result } = renderHook(() => pokemonPartyStore());
+
+		expect(result.current.party).toEqual([]);
 	});
 
-	const asyncStoragePersister = createAsyncStoragePersister({
-		storage: null
+	it('[addToParty] has a length of one after inserting', async () => {
+		const { result } = renderHook(() => pokemonPartyStore());
+
+		await act(() =>
+			result.current.addToParty({
+				id: 1,
+				name: 'name',
+				details: {
+					nodes: []
+				},
+				flavor_text: []
+			})
+		);
+
+		expect(result.current.party).toHaveLength(1);
 	});
 
-	const wrapper = ({ children }: PropsWithChildren) => (
-		<PersistQueryClientProvider
-			client={queryClient}
-			persistOptions={{ persister: asyncStoragePersister }}>
-			{children}
-		</PersistQueryClientProvider>
-	);
+	it('[addToParty] throws an error if adding more than six to party', async () => {
+		const { result } = renderHook(() => pokemonPartyStore());
 
-	afterEach(() => {
-		queryClient.clear();
-		queryClient.resetQueries();
-	});
-
-	it('returns an empty array with no party', async () => {
-		const { result } = renderHook(() => PokemonStore(), {
-			wrapper
-		});
-
-		const data = renderHook(() => result.current, { wrapper });
-
-		await waitFor(() => {
-			expect(data.result.current.party).toEqual([]);
-		});
-	});
-
-	it('has a length of one after inserting', async () => {
-		const pkmn: Pokemon = {
-			id: 1,
-			name: 'name',
-			details: {
-				nodes: []
-			},
-			flavor_text: []
-		};
-
-		const { result } = renderHook(() => PokemonStore(), {
-			wrapper
-		});
-
-		act(() => result.current.addToParty(pkmn));
-
-		await waitFor(() => {
-			expect(result.current.party).toHaveLength(1);
-		});
-	});
-
-	it('throws an error if adding more than six to party', () => {
-		const { result } = renderHook(() => PokemonStore(), {
-			wrapper
-		});
-
-		act(() => {
+		await act(async () => {
 			for (let i = 1; i <= 6; i++) {
-				result.current.addToParty({
+				await result.current.addToParty({
 					id: i,
 					name: 'name',
 					details: {
@@ -85,20 +48,40 @@ describe('usePartyStore', () => {
 			}
 		});
 
-		const pkmn = {
-			id: 9,
-			name: 'name',
-			details: {
-				nodes: []
-			},
-			flavor_text: []
-		};
+		expect(async () => {
+			await result.current.addToParty({
+				id: 7,
+				name: 'name',
+				details: {
+					nodes: []
+				},
+				flavor_text: []
+			});
+		}).rejects.toThrow('party cannot contain more than six pokemon');
+	});
 
-		waitFor(() => {
-			// party cannot contain more than six pokemon.
-			expect(() => {
-				result.current.addToParty(pkmn);
-			}).rejects.toThrow();
-		});
+	it('[addToParty] throws an error if pokemon is already in party', async () => {
+		const { result } = renderHook(() => pokemonPartyStore());
+		await act(() =>
+			result.current.addToParty({
+				id: 1,
+				name: 'name',
+				details: {
+					nodes: []
+				},
+				flavor_text: []
+			})
+		);
+
+		expect(async () => {
+			await result.current.addToParty({
+				id: 1,
+				name: 'name',
+				details: {
+					nodes: []
+				},
+				flavor_text: []
+			});
+		}).rejects.toThrow('pokemon is already in party');
 	});
 });

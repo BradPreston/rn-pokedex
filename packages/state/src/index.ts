@@ -1,1 +1,1 @@
-export { default as PokemonStore } from './usePartyStore';
+export { default as usePokemonPartyStore } from './usePartyStore';
