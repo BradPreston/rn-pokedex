@@ -9,8 +9,8 @@ type State = {
 
 type Actions = {
 	addToParty: (pkmn: Pokemon) => Promise<void>;
-	clearParty: () => void;
-	removeFromParty: (pkmn: Pokemon) => void;
+	clearParty: () => Promise<void>;
+	removeFromParty: (pkmn: Pokemon) => Promise<void>;
 };
 
 const initialState: State = {
@@ -33,14 +33,14 @@ export default function usePokemonPartyStore() {
 						throw Error('an error ocurred');
 					}
 				},
-				removeFromParty: (pkmn: Pokemon) => {
+				removeFromParty: async (pkmn: Pokemon) => {
 					const index = get().party.indexOf(pkmn);
 					if (index === -1) {
 						throw new ReferenceError('pokemon is not in party');
 					}
 					set({ party: get().party.filter((p) => p.id !== pkmn.id) });
 				},
-				clearParty: () => {
+				clearParty: async () => {
 					if (get().party.length === 0) {
 						throw new RangeError('party is already empty');
 					}
