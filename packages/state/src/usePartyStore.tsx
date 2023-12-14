@@ -55,7 +55,7 @@ export default function usePokemonPartyStore() {
 	);
 }
 
-interface Add {
+interface PokemonPersistState {
 	set: (
 		partial:
 			| (State & Actions)
@@ -69,7 +69,7 @@ interface Add {
 	pkmn: Pokemon;
 }
 
-async function add({ set, get, pkmn }: Add) {
+async function add({ set, get, pkmn }: PokemonPersistState) {
 	if (get().party.length >= 6) {
 		throw new RangeError('party cannot contain more than six pokemon');
 	}
