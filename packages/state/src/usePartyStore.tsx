@@ -34,17 +34,24 @@ export default function usePokemonPartyStore() {
 					}
 				},
 				removeFromParty: async (pkmn: Pokemon) => {
-					const index = get().party.indexOf(pkmn);
-					if (index === -1) {
-						throw new ReferenceError('pokemon is not in party');
+					try {
+						await remove({ set, get, pkmn });
+					} catch (err) {
+						if (err instanceof ReferenceError)
+							throw ReferenceError(err.message);
+						throw Error('an error ocurred');
 					}
-					set({ party: get().party.filter((p) => p.id !== pkmn.id) });
 				},
 				clearParty: async () => {
-					if (get().party.length === 0) {
-						throw new RangeError('party is already empty');
+					try {
+						if (get().party.length === 0) {
+							throw new RangeError('party is already empty');
+						}
+						set(initialState, true);
+					} catch (err) {
+						if (err instanceof RangeError) throw RangeError(err.message);
+						throw Error('an error ocurred');
 					}
-					set(initialState, true);
 				}
 			}),
 			{
@@ -78,4 +85,14 @@ async function add({ set, get, pkmn }: PokemonPersistState) {
 	if (inParty) throw new ReferenceError('pokemon is already in party');
 
 	set({ party: [...get().party, pkmn] });
+}
+
+async function remove({ set, get, pkmn }: PokemonPersistState) {
+	const index = get().party.findIndex((p) => p.id === pkmn.id);
+
+	if (index === -1) {
+		throw new ReferenceError('pokemon is not in party');
+	}
+
+	set({ party: get().party.filter((p) => p.id !== pkmn.id) });
 }
