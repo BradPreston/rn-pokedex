@@ -20,6 +20,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.23.5
         version: 7.23.5
+      '@repo/query':
+        specifier: workspace:*
+        version: link:../../packages/query
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui

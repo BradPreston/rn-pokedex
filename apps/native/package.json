@@ -13,6 +13,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.5",
     "@repo/ui": "workspace:*",
+    "@repo/query": "workspace:*",
     "expo": "^49.0.20",
     "expo-status-bar": "~1.6.0",
     "react": "^18.2.0",
