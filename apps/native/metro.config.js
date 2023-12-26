@@ -1,21 +1,25 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require("expo/metro-config");
-const path = require("path");
+const path = require('path');
+const { getDefaultConfig } = require('expo/metro-config');
 
-// Find the workspace root, this can be replaced with `find-yarn-workspace-root`
-const workspaceRoot = path.resolve(__dirname, "../..");
+// 1. Enable CSS for Expo.
+const config = getDefaultConfig(__dirname, {
+	isCSSEnabled: true
+});
+
+// This is not needed for NativeWind, it is configuration for Metro to understand monorepos
 const projectRoot = __dirname;
-
-const config = getDefaultConfig(projectRoot);
-
-// 1. Watch all files within the monorepo
+const workspaceRoot = path.resolve(projectRoot, '../..');
 config.watchFolders = [workspaceRoot];
-// 2. Let Metro know where to resolve packages, and in what order
+config.resolver.disableHierarchicalLookup = true;
 config.resolver.nodeModulesPaths = [
-  path.resolve(projectRoot, "node_modules"),
-  path.resolve(workspaceRoot, "node_modules"),
+	path.resolve(projectRoot, 'node_modules'),
+	path.resolve(workspaceRoot, 'node_modules')
 ];
-// 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
-config.resolver.disableHierarchicalLookup = false;
 
-module.exports = config;
+// 2. Enable NativeWind
+const { withNativeWind } = require('nativewind/metro');
+module.exports = withNativeWind(config, {
+	// 3. Set `input` to your CSS file with the Tailwind at-rules
+	input: 'global.css',
+	projectRoot
+});
