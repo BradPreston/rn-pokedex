@@ -1,26 +1,40 @@
 import './global.css';
 import { Text, View, LogBox } from 'react-native';
-import { useFonts } from 'expo-font';
-import { useCallback } from 'react';
+// import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
+import { useCallback, useEffect, useState } from 'react';
 import { Provider } from '@repo/query';
 import { SplashScreen } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
+SplashScreen.preventAutoHideAsync();
 
 export default function Native() {
-	const [fontsLoaded, fontsError] = useFonts({
-		'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
-		'Roboto-Black': require('./assets/fonts/Roboto-Black.ttf')
-	});
+	const [appIsReady, setAppIsReady] = useState(false);
+
+	useEffect(() => {
+		async function prepare() {
+			try {
+				await Font.loadAsync('./assets/fonts/Roboto-Regular.ttf');
+				await Font.loadAsync('./assets/fonts/Roboto-Black.ttf');
+
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+			} catch (err) {
+				console.warn(err);
+			} finally {
+				setAppIsReady(true);
+			}
+		}
+
+		prepare();
+	}, []);
 
 	const onLayoutRootView = useCallback(async () => {
-		if (fontsLoaded || fontsError) {
-			await SplashScreen.hideAsync();
-		}
-	}, [fontsLoaded, fontsError]);
+		if (appIsReady) await SplashScreen.hideAsync();
+	}, [appIsReady]);
 
-	if (!fontsLoaded || fontsError) return null;
+	if (!appIsReady) return;
 
 	return (
 		<SafeAreaProvider onLayout={onLayoutRootView}>
