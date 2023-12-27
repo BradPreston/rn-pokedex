@@ -1,6 +1,5 @@
 import './global.css';
 import { Text, View, LogBox } from 'react-native';
-// import { useFonts } from 'expo-font';
 import * as Font from 'expo-font';
 import { useCallback, useEffect, useState } from 'react';
 import { Provider } from '@repo/query';
