@@ -229,6 +229,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@expo/html-elements':
+        specifier: ^0.5.1
+        version: 0.5.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -2140,6 +2143,10 @@ packages:
       getenv: 1.0.0
     transitivePeerDependencies:
       - supports-color
+
+  /@expo/html-elements@0.5.1:
+    resolution: {integrity: sha512-BDAVI3ayykNykAeAc3B2USSiA244te2WAJDYske/AtDnm/AWZM/DE9lCwSkysuu7uOMcNp78LM2L/v6TwvxqZQ==}
+    dev: false
 
   /@expo/image-utils@0.3.22:
     resolution: {integrity: sha512-uzq+RERAtkWypOFOLssFnXXqEqKjNj9eXN7e97d/EXUAojNcLDoXc0sL+F5B1I4qtlsnhX01kcpoIBBZD8wZNQ==}
