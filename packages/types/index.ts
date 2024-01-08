@@ -1,3 +1,5 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 export type PokemonArr = {
 	pokemon: Pokemon[];
 };
@@ -26,4 +28,13 @@ type Type = {
 
 type FlavorText = {
 	description: string;
+};
+
+export type TypeColors = {
+	[key: string]: {
+		chipBackground: string;
+		cardBackground: string;
+		textColor: string;
+		icon: IconDefinition;
+	};
 };
