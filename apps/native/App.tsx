@@ -1,16 +1,24 @@
 import './global.css';
-import { Text, View, LogBox } from 'react-native';
+import { View, LogBox } from 'react-native';
 import * as Font from 'expo-font';
 import { useCallback, useEffect, useState } from 'react';
-import { Provider } from '@repo/query';
+import { PokemonQuery, GET_POKEMON_BY_ID, GET_ALL_POKEMON } from '@repo/query';
 import { SplashScreen } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Paragraph, Heading, Card } from '@repo/ui';
+import { PokemonArr } from '@repo/types';
 
 LogBox.ignoreAllLogs();
 SplashScreen.preventAutoHideAsync();
 
 export default function Native() {
 	const [appIsReady, setAppIsReady] = useState(false);
+
+	const { data } = PokemonQuery<PokemonArr>(
+		'pokemonById',
+		GET_POKEMON_BY_ID,
+		1
+	);
 
 	useEffect(() => {
 		async function prepare() {
@@ -34,14 +42,24 @@ export default function Native() {
 	}, [appIsReady]);
 
 	if (!appIsReady) return;
+	if (!data) return;
 
 	return (
 		<SafeAreaProvider onLayout={onLayoutRootView}>
-			<Provider>
-				<View className='items-center justify-center w-full h-full'>
-					<Text className='text-red-500 text-4xl font-bold'>Hello</Text>
-				</View>
-			</Provider>
+			<View className='items-center justify-center w-full h-full'>
+				<Heading text='heading 1' type='H1' />
+				<Heading text='heading 2' type='H2' />
+				<Heading text='heading 3' type='H3' />
+				<Heading text='heading 4' type='H4' />
+				<Heading text='heading 5' type='H5' />
+				<Heading text='heading 6' type='H6' />
+				<Paragraph text='hello there' />
+
+				<Card
+					pokemon={data.pokemon[0]}
+					image={require('./assets/favicon.png')}
+				/>
+			</View>
 		</SafeAreaProvider>
 	);
 }
