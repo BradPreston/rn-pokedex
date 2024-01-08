@@ -1,16 +1,16 @@
 import { H1, H2, H3, H4, H5, H6 } from '@expo/html-elements';
-import React from 'react';
+import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { styles } from './styles';
 
 type Heading = 'H1' | 'H2' | 'H3' | 'H4' | 'H5' | 'H6';
 
-type Props = {
+type HeadingProps = {
 	text: string;
 	type: Heading;
 };
 
-export function Heading({ text, type }: Props) {
+export function Heading({ text, type }: HeadingProps) {
 	switch (type) {
 		case 'H1':
 			return <H1 style={style.default}>{text}</H1>;
