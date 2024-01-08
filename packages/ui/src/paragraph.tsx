@@ -1,11 +1,11 @@
 import { P } from '@expo/html-elements';
 import { styles } from './styles';
-import React from 'react';
+import * as React from 'react';
 
-type Props = {
+type ParagraphProps = {
 	text: string;
 };
 
-export function Paragraph({ text }: Props) {
+export function Paragraph({ text }: ParagraphProps) {
 	return <P style={styles.default}>{text}</P>;
 }
