@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
 	Image,
 	ImageSourcePropType,
@@ -75,8 +75,8 @@ export function Card({ pokemon, image }: CardProps) {
 					<Text style={style.number}>#{id}</Text>
 					<Text style={style.name}>{name}</Text>
 					<View style={style.types}>
-						{types.map((type) => (
-							<Text>{type.type.name}</Text>
+						{types.map((type, index) => (
+							<Text key={type.type.name + index}>{type.type.name}</Text>
 						))}
 					</View>
 
