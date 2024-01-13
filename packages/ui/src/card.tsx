@@ -11,7 +11,7 @@ import { Pokemon } from '@repo/types';
 import typeColors from './typeColors';
 import { TypeChip } from './typeChip';
 
-function createDynamicStylesheet(typeName: string) {
+function createDynamicStylesheet(typeName: string, customStyle?: any) {
 	return StyleSheet.create({
 		box: {
 			backgroundColor: typeColors[typeName]['cardBackground'],
@@ -27,7 +27,8 @@ function createDynamicStylesheet(typeName: string) {
 		number: {
 			color: 'rgb(55 65 81)', // text-gray-700
 			fontFamily: 'Roboto-Black',
-			fontSize: 16
+			fontSize: 16,
+			...customStyle?.number
 		},
 		name: {
 			fontSize: 36, // text-4xl
@@ -35,7 +36,8 @@ function createDynamicStylesheet(typeName: string) {
 			textTransform: 'capitalize',
 			color: '#ffffff', // text-white
 			paddingVertical: 8, // py-2
-			fontFamily: 'Roboto-Black'
+			fontFamily: 'Roboto-Black',
+			...customStyle?.name
 		},
 		types: {
 			flexDirection: 'row', // flex-row
@@ -68,14 +70,15 @@ function createDynamicStylesheet(typeName: string) {
 }
 
 type CardProps = {
+	customStyle?: any;
 	pokemon: Pokemon;
 	image: ImageSourcePropType;
 };
 
-export function Card({ pokemon, image }: CardProps) {
+export function Card({ pokemon, image, customStyle }: CardProps) {
 	const { name, id, details } = pokemon;
 	const { types } = details.nodes[0];
-	const style = createDynamicStylesheet(types[0].type.name);
+	const style = createDynamicStylesheet(types[0].type.name, customStyle);
 
 	return (
 		<View style={style.box}>
