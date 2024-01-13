@@ -81,6 +81,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@repo/query':
+        specifier: workspace:^
+        version: link:../../packages/query
+      '@repo/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
