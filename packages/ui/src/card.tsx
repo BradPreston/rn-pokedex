@@ -37,6 +37,10 @@ function createDynamicStylesheet(typeName: string, customStyle?: any) {
 			color: '#ffffff', // text-white
 			paddingVertical: 8, // py-2
 			fontFamily: 'Roboto-Black',
+			zIndex: 40,
+			textShadowColor: 'rgba(33, 33, 33, .75)',
+			textShadowOffset: { width: 2, height: 2 },
+			textShadowRadius: 5,
 			...customStyle?.name
 		},
 		types: {
@@ -59,7 +63,8 @@ function createDynamicStylesheet(typeName: string, customStyle?: any) {
 		pokemonImageWrapper: {
 			position: 'absolute',
 			right: 8, // right-2
-			top: -32 // -top-8
+			top: -32, // -top-8
+			zIndex: -10
 		},
 		pokemonImage: {
 			objectFit: 'contain',
