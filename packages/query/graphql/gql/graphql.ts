@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  jsonb: { input: any; output: any; }
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -82,6 +83,34 @@ export enum Cursor_Ordering {
   /** descending ordering of the cursor */
   Desc = 'DESC'
 }
+
+export type Jsonb_Cast_Exp = {
+  String?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
+export type Jsonb_Comparison_Exp = {
+  _cast?: InputMaybe<Jsonb_Cast_Exp>;
+  /** is the column contained in the given json value */
+  _contained_in?: InputMaybe<Scalars['jsonb']['input']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: InputMaybe<Scalars['jsonb']['input']>;
+  _eq?: InputMaybe<Scalars['jsonb']['input']>;
+  _gt?: InputMaybe<Scalars['jsonb']['input']>;
+  _gte?: InputMaybe<Scalars['jsonb']['input']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: InputMaybe<Scalars['String']['input']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Scalars['jsonb']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['jsonb']['input']>;
+  _lte?: InputMaybe<Scalars['jsonb']['input']>;
+  _neq?: InputMaybe<Scalars['jsonb']['input']>;
+  _nin?: InputMaybe<Array<Scalars['jsonb']['input']>>;
+};
 
 /** column ordering options */
 export enum Order_By {
@@ -5425,6 +5454,8 @@ export type Pokemon_V2_Contesttype = {
   __typename?: 'pokemon_v2_contesttype';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  /** An object relationship */
+  pokemon_v2_berryflavor?: Maybe<Pokemon_V2_Berryflavor>;
   /** An array relationship */
   pokemon_v2_berryflavors: Array<Pokemon_V2_Berryflavor>;
   /** An aggregate relationship */
@@ -5542,6 +5573,7 @@ export type Pokemon_V2_Contesttype_Bool_Exp = {
   _or?: InputMaybe<Array<Pokemon_V2_Contesttype_Bool_Exp>>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  pokemon_v2_berryflavor?: InputMaybe<Pokemon_V2_Berryflavor_Bool_Exp>;
   pokemon_v2_berryflavors?: InputMaybe<Pokemon_V2_Berryflavor_Bool_Exp>;
   pokemon_v2_berryflavors_aggregate?: InputMaybe<Pokemon_V2_Berryflavor_Aggregate_Bool_Exp>;
   pokemon_v2_contesttypenames?: InputMaybe<Pokemon_V2_Contesttypename_Bool_Exp>;
@@ -5568,6 +5600,7 @@ export type Pokemon_V2_Contesttype_Min_Fields = {
 export type Pokemon_V2_Contesttype_Order_By = {
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  pokemon_v2_berryflavor?: InputMaybe<Pokemon_V2_Berryflavor_Order_By>;
   pokemon_v2_berryflavors_aggregate?: InputMaybe<Pokemon_V2_Berryflavor_Aggregate_Order_By>;
   pokemon_v2_contesttypenames_aggregate?: InputMaybe<Pokemon_V2_Contesttypename_Aggregate_Order_By>;
   pokemon_v2_moves_aggregate?: InputMaybe<Pokemon_V2_Move_Aggregate_Order_By>;
@@ -15835,7 +15868,13 @@ export type Pokemon_V2_Itemsprites = {
   item_id?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   pokemon_v2_item?: Maybe<Pokemon_V2_Item>;
-  sprites: Scalars['String']['output'];
+  sprites: Scalars['jsonb']['output'];
+};
+
+
+/** columns and relationships of "pokemon_v2_itemsprites" */
+export type Pokemon_V2_ItemspritesSpritesArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "pokemon_v2_itemsprites" */
@@ -15915,7 +15954,7 @@ export type Pokemon_V2_Itemsprites_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   item_id?: InputMaybe<Int_Comparison_Exp>;
   pokemon_v2_item?: InputMaybe<Pokemon_V2_Item_Bool_Exp>;
-  sprites?: InputMaybe<String_Comparison_Exp>;
+  sprites?: InputMaybe<Jsonb_Comparison_Exp>;
 };
 
 /** aggregate max on columns */
@@ -15923,14 +15962,12 @@ export type Pokemon_V2_Itemsprites_Max_Fields = {
   __typename?: 'pokemon_v2_itemsprites_max_fields';
   id?: Maybe<Scalars['Int']['output']>;
   item_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "pokemon_v2_itemsprites" */
 export type Pokemon_V2_Itemsprites_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   item_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -15938,14 +15975,12 @@ export type Pokemon_V2_Itemsprites_Min_Fields = {
   __typename?: 'pokemon_v2_itemsprites_min_fields';
   id?: Maybe<Scalars['Int']['output']>;
   item_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "pokemon_v2_itemsprites" */
 export type Pokemon_V2_Itemsprites_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   item_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** Ordering options when selecting data from "pokemon_v2_itemsprites". */
@@ -16017,7 +16052,7 @@ export type Pokemon_V2_Itemsprites_Stream_Cursor_Input = {
 export type Pokemon_V2_Itemsprites_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   item_id?: InputMaybe<Scalars['Int']['input']>;
-  sprites?: InputMaybe<Scalars['String']['input']>;
+  sprites?: InputMaybe<Scalars['jsonb']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -36603,7 +36638,13 @@ export type Pokemon_V2_Pokemonformsprites = {
   pokemon_form_id?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   pokemon_v2_pokemonform?: Maybe<Pokemon_V2_Pokemonform>;
-  sprites: Scalars['String']['output'];
+  sprites: Scalars['jsonb']['output'];
+};
+
+
+/** columns and relationships of "pokemon_v2_pokemonformsprites" */
+export type Pokemon_V2_PokemonformspritesSpritesArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "pokemon_v2_pokemonformsprites" */
@@ -36683,7 +36724,7 @@ export type Pokemon_V2_Pokemonformsprites_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   pokemon_form_id?: InputMaybe<Int_Comparison_Exp>;
   pokemon_v2_pokemonform?: InputMaybe<Pokemon_V2_Pokemonform_Bool_Exp>;
-  sprites?: InputMaybe<String_Comparison_Exp>;
+  sprites?: InputMaybe<Jsonb_Comparison_Exp>;
 };
 
 /** aggregate max on columns */
@@ -36691,14 +36732,12 @@ export type Pokemon_V2_Pokemonformsprites_Max_Fields = {
   __typename?: 'pokemon_v2_pokemonformsprites_max_fields';
   id?: Maybe<Scalars['Int']['output']>;
   pokemon_form_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "pokemon_v2_pokemonformsprites" */
 export type Pokemon_V2_Pokemonformsprites_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   pokemon_form_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -36706,14 +36745,12 @@ export type Pokemon_V2_Pokemonformsprites_Min_Fields = {
   __typename?: 'pokemon_v2_pokemonformsprites_min_fields';
   id?: Maybe<Scalars['Int']['output']>;
   pokemon_form_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "pokemon_v2_pokemonformsprites" */
 export type Pokemon_V2_Pokemonformsprites_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   pokemon_form_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** Ordering options when selecting data from "pokemon_v2_pokemonformsprites". */
@@ -36785,7 +36822,7 @@ export type Pokemon_V2_Pokemonformsprites_Stream_Cursor_Input = {
 export type Pokemon_V2_Pokemonformsprites_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   pokemon_form_id?: InputMaybe<Scalars['Int']['input']>;
-  sprites?: InputMaybe<Scalars['String']['input']>;
+  sprites?: InputMaybe<Scalars['jsonb']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -40848,7 +40885,13 @@ export type Pokemon_V2_Pokemonsprites = {
   pokemon_id?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   pokemon_v2_pokemon?: Maybe<Pokemon_V2_Pokemon>;
-  sprites: Scalars['String']['output'];
+  sprites: Scalars['jsonb']['output'];
+};
+
+
+/** columns and relationships of "pokemon_v2_pokemonsprites" */
+export type Pokemon_V2_PokemonspritesSpritesArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregated selection of "pokemon_v2_pokemonsprites" */
@@ -40928,7 +40971,7 @@ export type Pokemon_V2_Pokemonsprites_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   pokemon_id?: InputMaybe<Int_Comparison_Exp>;
   pokemon_v2_pokemon?: InputMaybe<Pokemon_V2_Pokemon_Bool_Exp>;
-  sprites?: InputMaybe<String_Comparison_Exp>;
+  sprites?: InputMaybe<Jsonb_Comparison_Exp>;
 };
 
 /** aggregate max on columns */
@@ -40936,14 +40979,12 @@ export type Pokemon_V2_Pokemonsprites_Max_Fields = {
   __typename?: 'pokemon_v2_pokemonsprites_max_fields';
   id?: Maybe<Scalars['Int']['output']>;
   pokemon_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "pokemon_v2_pokemonsprites" */
 export type Pokemon_V2_Pokemonsprites_Max_Order_By = {
   id?: InputMaybe<Order_By>;
   pokemon_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -40951,14 +40992,12 @@ export type Pokemon_V2_Pokemonsprites_Min_Fields = {
   __typename?: 'pokemon_v2_pokemonsprites_min_fields';
   id?: Maybe<Scalars['Int']['output']>;
   pokemon_id?: Maybe<Scalars['Int']['output']>;
-  sprites?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "pokemon_v2_pokemonsprites" */
 export type Pokemon_V2_Pokemonsprites_Min_Order_By = {
   id?: InputMaybe<Order_By>;
   pokemon_id?: InputMaybe<Order_By>;
-  sprites?: InputMaybe<Order_By>;
 };
 
 /** Ordering options when selecting data from "pokemon_v2_pokemonsprites". */
@@ -41030,7 +41069,7 @@ export type Pokemon_V2_Pokemonsprites_Stream_Cursor_Input = {
 export type Pokemon_V2_Pokemonsprites_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   pokemon_id?: InputMaybe<Scalars['Int']['input']>;
-  sprites?: InputMaybe<Scalars['String']['input']>;
+  sprites?: InputMaybe<Scalars['jsonb']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -42016,6 +42055,8 @@ export type Pokemon_V2_Region = {
   __typename?: 'pokemon_v2_region';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  /** An object relationship */
+  pokemon_v2_generation?: Maybe<Pokemon_V2_Generation>;
   /** An array relationship */
   pokemon_v2_generations: Array<Pokemon_V2_Generation>;
   /** An aggregate relationship */
@@ -42181,6 +42222,7 @@ export type Pokemon_V2_Region_Bool_Exp = {
   _or?: InputMaybe<Array<Pokemon_V2_Region_Bool_Exp>>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  pokemon_v2_generation?: InputMaybe<Pokemon_V2_Generation_Bool_Exp>;
   pokemon_v2_generations?: InputMaybe<Pokemon_V2_Generation_Bool_Exp>;
   pokemon_v2_generations_aggregate?: InputMaybe<Pokemon_V2_Generation_Aggregate_Bool_Exp>;
   pokemon_v2_locations?: InputMaybe<Pokemon_V2_Location_Bool_Exp>;
@@ -42211,6 +42253,7 @@ export type Pokemon_V2_Region_Min_Fields = {
 export type Pokemon_V2_Region_Order_By = {
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  pokemon_v2_generation?: InputMaybe<Pokemon_V2_Generation_Order_By>;
   pokemon_v2_generations_aggregate?: InputMaybe<Pokemon_V2_Generation_Aggregate_Order_By>;
   pokemon_v2_locations_aggregate?: InputMaybe<Pokemon_V2_Location_Aggregate_Order_By>;
   pokemon_v2_pokedexes_aggregate?: InputMaybe<Pokemon_V2_Pokedex_Aggregate_Order_By>;
@@ -57408,8 +57451,8 @@ export type Pokemon_DetailsQueryVariables = Exact<{
 }>;
 
 
-export type Pokemon_DetailsQuery = { __typename?: 'query_root', pokemon: Array<{ __typename?: 'pokemon_v2_pokemonspecies', id: number, name: string, is_legendary: boolean, details: { __typename?: 'pokemon_v2_pokemon_aggregate', nodes: Array<{ __typename?: 'pokemon_v2_pokemon', height?: number | null, weight?: number | null, types: Array<{ __typename?: 'pokemon_v2_pokemontype', type?: { __typename?: 'pokemon_v2_type', name: string } | null }> }> }, flavor_text: Array<{ __typename?: 'pokemon_v2_pokemonspeciesflavortext', description: string }> }> };
+export type Pokemon_DetailsQuery = { __typename?: 'query_root', evolution_chain: Array<{ __typename?: 'pokemon_v2_evolutionchain', evolution: Array<{ __typename?: 'pokemon_v2_pokemonspecies', name: string, id: number }> }>, species: Array<{ __typename?: 'pokemon_v2_pokemonspecies', description: Array<{ __typename?: 'pokemon_v2_pokemonspeciesflavortext', flavor_text: string }> }>, pokemon_stat: Array<{ __typename?: 'pokemon_v2_pokemonstat', base_stat: number, stat?: { __typename?: 'pokemon_v2_stat', name: string } | null }>, pokemon_type: Array<{ __typename?: 'pokemon_v2_pokemontype', type?: { __typename?: 'pokemon_v2_type', name: string, id: number } | null }>, efficacies: Array<{ __typename?: 'pokemon_v2_typeefficacy', target_type?: { __typename?: 'pokemon_v2_type', name: string, id: number, type_efficacy: Array<{ __typename?: 'pokemon_v2_typeefficacy', damage_factor: number, type?: { __typename?: 'pokemon_v2_type', name: string } | null }> } | null }>, details: Array<{ __typename?: 'pokemon_v2_pokemon', name: string, id: number, height?: number | null, weight?: number | null, abilities: Array<{ __typename?: 'pokemon_v2_pokemonability', ability?: { __typename?: 'pokemon_v2_ability', name: string, description: Array<{ __typename?: 'pokemon_v2_abilityflavortext', flavor_text: string }> } | null }> }> };
 
 
 export const Get_All_PokemonDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"get_all_pokemon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"pokemon"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspecies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"151"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_legendary"}},{"kind":"Field","alias":{"kind":"Name","value":"details"},"name":{"kind":"Name","value":"pokemon_v2_pokemons_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","alias":{"kind":"Name","value":"types"},"name":{"kind":"Name","value":"pokemon_v2_pokemontypes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"type"},"name":{"kind":"Name","value":"pokemon_v2_type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"flavor_text"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspeciesflavortexts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_v2_language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"StringValue","value":"en","block":false}}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_v2_version"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"StringValue","value":"red","block":false}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"description"},"name":{"kind":"Name","value":"flavor_text"}}]}}]}}]}}]} as unknown as DocumentNode<Get_All_PokemonQuery, Get_All_PokemonQueryVariables>;
-export const Pokemon_DetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"pokemon_details"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"pokemon"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspecies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_legendary"}},{"kind":"Field","alias":{"kind":"Name","value":"details"},"name":{"kind":"Name","value":"pokemon_v2_pokemons_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","alias":{"kind":"Name","value":"types"},"name":{"kind":"Name","value":"pokemon_v2_pokemontypes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"type"},"name":{"kind":"Name","value":"pokemon_v2_type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"flavor_text"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspeciesflavortexts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_v2_language"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"StringValue","value":"en","block":false}}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_v2_version"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"StringValue","value":"red","block":false}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"description"},"name":{"kind":"Name","value":"flavor_text"}}]}}]}}]}}]} as unknown as DocumentNode<Pokemon_DetailsQuery, Pokemon_DetailsQueryVariables>;
+export const Pokemon_DetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"pokemon_details"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"evolution_chain"},"name":{"kind":"Name","value":"pokemon_v2_evolutionchain"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"evolution"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspecies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"species"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspecies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"description"},"name":{"kind":"Name","value":"pokemon_v2_pokemonspeciesflavortexts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"IntValue","value":"9"}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flavor_text"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"pokemon_stat"},"name":{"kind":"Name","value":"pokemon_v2_pokemonstat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"stat"},"name":{"kind":"Name","value":"pokemon_v2_stat"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"base_stat"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"pokemon_type"},"name":{"kind":"Name","value":"pokemon_v2_pokemontype"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"pokemon_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"type"},"name":{"kind":"Name","value":"pokemon_v2_type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"efficacies"},"name":{"kind":"Name","value":"pokemon_v2_typeefficacy"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"18"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"target_type"},"name":{"kind":"Name","value":"pokemonV2TypeByTargetTypeId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","alias":{"kind":"Name","value":"type_efficacy"},"name":{"kind":"Name","value":"pokemon_v2_typeefficacies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"damage_factor"}},{"kind":"Field","alias":{"kind":"Name","value":"type"},"name":{"kind":"Name","value":"pokemonV2TypeByTargetTypeId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"details"},"name":{"kind":"Name","value":"pokemon_v2_pokemon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","alias":{"kind":"Name","value":"abilities"},"name":{"kind":"Name","value":"pokemon_v2_pokemonabilities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"ability"},"name":{"kind":"Name","value":"pokemon_v2_ability"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","alias":{"kind":"Name","value":"description"},"name":{"kind":"Name","value":"pokemon_v2_abilityflavortexts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"language_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"IntValue","value":"9"}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flavor_text"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<Pokemon_DetailsQuery, Pokemon_DetailsQueryVariables>;
