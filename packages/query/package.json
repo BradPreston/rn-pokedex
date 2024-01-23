@@ -17,7 +17,7 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.3.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@repo/types": "workspace:*",
     "@tanstack/query-async-storage-persister": "^5.12.1",

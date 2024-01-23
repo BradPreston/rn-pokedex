@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@repo/types": "workspace:*",
     "@testing-library/jest-native": "^5.4.3",
