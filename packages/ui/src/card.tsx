@@ -81,13 +81,14 @@ type CardProps = {
 };
 
 export function Card({ pokemon, image, customStyle }: CardProps) {
-	const { name, id, details } = pokemon;
-	const { types } = details.nodes[0];
-	const style = createDynamicStylesheet(types[0].type.name, customStyle);
+	// const { name, id, details } = pokemon;
+	// const { types } = details.nodes[0];
+	// const style = createDynamicStylesheet(types[0].type.name, customStyle);
 
 	return (
-		<View style={style.box}>
-			<Pressable style={{ width: '100%' }}>
+		<View >
+			<Text>Card</Text>
+			{/* <Pressable style={{ width: '100%' }}>
 				<View style={style.wrapper}>
 					<Text style={style.number}>#{id.toString().padStart(3, '0')}</Text>
 					<Text style={style.name}>{name}</Text>
@@ -109,7 +110,7 @@ export function Card({ pokemon, image, customStyle }: CardProps) {
 						}}
 					/>
 				</View>
-			</Pressable>
+			</Pressable> */}
 		</View>
 	);
 }
