@@ -4,7 +4,7 @@ import { Card } from '@repo/ui';
 import { useCallback } from 'react';
 import { FlatList, ListRenderItem, View, Text } from 'react-native';
 
-export default function AllPokemon() {
+export default function Page() {
 	// const { data } = PokemonQuery<PokemonArr>('allPokemon', GET_ALL_POKEMON);
 
 	// const pokeballImage = require('../../assets/white-pokeball-bg.png');
@@ -17,7 +17,7 @@ export default function AllPokemon() {
 	// if (!data) return;
 
 	return (
-		<View className='w-full px-5'>
+		<View>
 			<Text>Hello</Text>
 			{/* <FlatList
 				data={data.pokemon}

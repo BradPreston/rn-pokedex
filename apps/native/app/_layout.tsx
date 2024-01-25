@@ -1,15 +1,15 @@
 import '../global.css';
-import { LogBox } from 'react-native';
+import { LogBox, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
 import { Provider } from '@repo/query';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, Slot } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 SplashScreen.preventAutoHideAsync();
 
-export default function Native() {
+export default function Layout() {
 	const [fontsLoaded] = useFonts({
 		Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
 		'Roboto-Black': require('../assets/fonts/Roboto-Black.ttf')
@@ -28,7 +28,7 @@ export default function Native() {
 					screenOptions={{
 						title: 'Pokemon'
 					}}>
-					<Stack.Screen name='(pokemon)' />
+					<Stack.Screen name='(tabs)' />
 				</Stack>
 			</Provider>
 		</SafeAreaProvider>
