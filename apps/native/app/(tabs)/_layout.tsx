@@ -13,8 +13,12 @@ export default function TabLayout() {
 						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							{children}
 						</Text>
+					),
+					tabBarIcon: ({ size, focused }) => (
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
+							<Ionicons name='list-outline' size={size} />
+						</Text>
 					)
-					// tabBarIcon: () => <Ionicons name={'list-outline'} size={20} />
 				}}
 			/>
 			<Tabs.Screen
@@ -25,9 +29,12 @@ export default function TabLayout() {
 						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
 							{children}
 						</Text>
+					),
+					tabBarIcon: ({ size, focused }) => (
+						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
+							<Ionicons name='people-outline' size={size} />
+						</Text>
 					)
-
-					// tabBarIcon: () => <Ionicons name={'people-outline'} size={20} />
 				}}
 			/>
 		</Tabs>
