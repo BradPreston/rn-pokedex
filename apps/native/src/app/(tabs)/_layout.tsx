@@ -16,7 +16,7 @@ export default function TabLayout() {
 					),
 					tabBarIcon: ({ size, focused }) => (
 						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
-							<Ionicons name='list-outline' size={size} />
+							<Ionicons name={focused ? 'list' : 'list-outline'} size={size} />
 						</Text>
 					)
 				}}
@@ -32,7 +32,10 @@ export default function TabLayout() {
 					),
 					tabBarIcon: ({ size, focused }) => (
 						<Text className={`${focused ? 'text-cyan-700' : 'text-gray-400'}`}>
-							<Ionicons name='people-outline' size={size} />
+							<Ionicons
+								name={focused ? 'people' : 'people-outline'}
+								size={size}
+							/>
 						</Text>
 					)
 				}}
