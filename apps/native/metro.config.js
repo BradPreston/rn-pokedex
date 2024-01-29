@@ -1,24 +1,53 @@
-const path = require('path');
+// Learn more https://docs.expo.dev/guides/customizing-metro/
 const { getDefaultConfig } = require('expo/metro-config');
-
-// 1. Enable CSS for Expo.
-const config = getDefaultConfig(__dirname, {
-	isCSSEnabled: true,
-	transformer: {
-		babelTransformerPath: require.resolve('react-native-svg-transformer')
-	}
-});
-
-// This is not needed for NativeWind, it is configuration for Metro to understand monorepos
-const projectRoot = __dirname;
-const workspaceRoot = path.resolve(projectRoot, '../..');
-config.watchFolders = [workspaceRoot];
-// config.resolver.disableHierarchicalLookup = true;
-
-// 2. Enable NativeWind
 const { withNativeWind } = require('nativewind/metro');
-module.exports = withNativeWind(config, {
-	// 3. Set `input` to your CSS file with the Tailwind at-rules
-	input: 'global.css',
-	projectRoot
-});
+const { FileStore } = require('metro-cache');
+const path = require('path');
+
+module.exports = withTurborepoManagedCache(
+	withMonorepoPaths(
+		withNativeWind(getDefaultConfig(__dirname), { input: './global.css' })
+	)
+);
+
+/**
+ * Add the monorepo paths to the Metro config.
+ * This allows Metro to resolve modules from the monorepo.
+ *
+ * @see https://docs.expo.dev/guides/monorepos/#modify-the-metro-config
+ * @param {import('expo/metro-config').MetroConfig} config
+ * @returns {import('expo/metro-config').MetroConfig}
+ */
+function withMonorepoPaths(config) {
+	const projectRoot = __dirname;
+	const workspaceRoot = path.resolve(projectRoot, '../..');
+
+	// #1 - Watch all files in the monorepo
+	config.watchFolders = [workspaceRoot];
+
+	// #2 - Resolve modules within the project's `node_modules` first, then all monorepo modules
+	config.resolver.nodeModulesPaths = [
+		path.resolve(projectRoot, 'node_modules'),
+		path.resolve(workspaceRoot, 'node_modules')
+	];
+
+	// #3 - Force resolving nested modules to the folders below
+	config.resolver.disableHierarchicalLookup = true;
+	return config;
+}
+
+/**
+ * Move the Metro cache to the `node_modules/.cache/metro` folder.
+ * This repository configured Turborepo to use this cache location as well.
+ * If you have any environment variables, you can configure Turborepo to invalidate it when needed.
+ *
+ * @see https://turbo.build/repo/docs/reference/configuration#env
+ * @param {import('expo/metro-config').MetroConfig} config
+ * @returns {import('expo/metro-config').MetroConfig}
+ */
+function withTurborepoManagedCache(config) {
+	config.cacheStores = [
+		new FileStore({ root: path.join(__dirname, 'node_modules/.cache/metro') })
+	];
+	return config;
+}
