@@ -2,7 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 import { PropsWithChildren } from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { PokemonQuery } from '../src/pokemonQuery';
-import { PokemonArr } from '@repo/types';
+import { AllPokemon, Pokemon, PokemonArr } from '@repo/types';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import React from 'react';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
@@ -34,7 +34,7 @@ describe('PokemonQuery', () => {
 
 	it('[allPokemon] contains bulbasaur', async () => {
 		const { result } = renderHook(
-			() => PokemonQuery<PokemonArr>('allPokemon', GET_ALL_POKEMON),
+			() => PokemonQuery<AllPokemon>('allPokemon', GET_ALL_POKEMON),
 			{ wrapper }
 		);
 
@@ -58,19 +58,19 @@ describe('PokemonQuery', () => {
 
 	it('[pokemonById] gets charmander by id 4', async () => {
 		const { result } = renderHook(
-			() => PokemonQuery<PokemonArr>('pokemonById', GET_POKEMON_BY_ID, 4),
+			() => PokemonQuery<Pokemon>('pokemonById', GET_POKEMON_BY_ID, 4),
 			{ wrapper }
 		);
 
 		await waitFor(() => {
 			expect(result.current.isSuccess).toBe(true);
-			expect(result.current.data?.pokemon[0].name).toBe('charmander');
+			expect(result.current.data?.details[0].name).toBe('charmander');
 		});
 	});
 
 	it('[pokemonById] throws an error with a bad id', async () => {
 		const { result } = renderHook(
-			() => PokemonQuery<PokemonArr>('pokemonById', GET_POKEMON_BY_ID, 0),
+			() => PokemonQuery<Pokemon>('pokemonById', GET_POKEMON_BY_ID, 0),
 			{ wrapper }
 		);
 

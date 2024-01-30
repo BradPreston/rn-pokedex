@@ -4,6 +4,14 @@ export type PokemonArr = {
 	pokemon: Pokemon[];
 };
 
+export type AllPokemon = {
+	pokemon: {
+		name: string;
+		id: number;
+		types: Type[];
+	}[];
+};
+
 export type Pokemon = {
 	details: Details[];
 	efficacies: Efficacy[];
@@ -62,7 +70,7 @@ type Stat = {
 type Type = {
 	type: {
 		name: string;
-		id: number;
+		id?: number;
 	};
 };
 
