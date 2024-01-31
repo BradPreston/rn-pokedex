@@ -5,11 +5,13 @@ export type PokemonArr = {
 };
 
 export type AllPokemon = {
-	pokemon: {
-		name: string;
-		id: number;
-		types: Type[];
-	}[];
+	pokemon: SimplePokemon[];
+};
+
+export type SimplePokemon = {
+	name: string;
+	id: number;
+	types: Type[];
 };
 
 export type Pokemon = {
