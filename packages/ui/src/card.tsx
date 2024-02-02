@@ -7,7 +7,7 @@ import {
 	Text,
 	View
 } from 'react-native';
-import { Pokemon } from '@repo/types';
+import { SimplePokemon } from '@repo/types';
 import typeColors from './typeColors';
 import { TypeChip } from './typeChip';
 
@@ -75,20 +75,17 @@ function createDynamicStylesheet(typeName: string, customStyle?: any) {
 }
 
 type CardProps = {
-	customStyle?: any;
-	pokemon: Pokemon;
+	pokemon: SimplePokemon;
 	image: ImageSourcePropType;
 };
 
-export function Card({ pokemon, image, customStyle }: CardProps) {
-	// const { name, id, details } = pokemon;
-	// const { types } = details.nodes[0];
-	// const style = createDynamicStylesheet(types[0].type.name, customStyle);
+export function Card({ pokemon, image }: CardProps) {
+	const { name, id, types } = pokemon;
+	const style = createDynamicStylesheet(types[0].type.name);
 
 	return (
-		<View >
-			<Text>Card</Text>
-			{/* <Pressable style={{ width: '100%' }}>
+		<View>
+			<Pressable style={{ width: '100%' }}>
 				<View style={style.wrapper}>
 					<Text style={style.number}>#{id.toString().padStart(3, '0')}</Text>
 					<Text style={style.name}>{name}</Text>
@@ -110,7 +107,7 @@ export function Card({ pokemon, image, customStyle }: CardProps) {
 						}}
 					/>
 				</View>
-			</Pressable> */}
+			</Pressable>
 		</View>
 	);
 }
