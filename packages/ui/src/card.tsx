@@ -1,3 +1,4 @@
+import '../global.css';
 import React from 'react';
 import {
 	Image,
@@ -83,8 +84,9 @@ export function Card({ pokemon, image }: CardProps) {
 	const { name, id, types } = pokemon;
 	const style = createDynamicStylesheet(types[0].type.name);
 
+	// add bg-black for testing
 	return (
-		<View>
+		<View className='bg-black'>
 			<Pressable style={{ width: '100%' }}>
 				<View style={style.wrapper}>
 					<Text style={style.number}>#{id.toString().padStart(3, '0')}</Text>
