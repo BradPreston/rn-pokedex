@@ -6,7 +6,7 @@ const path = require('path');
 
 module.exports = withTurborepoManagedCache(
 	withMonorepoPaths(
-		withNativeWind(getDefaultConfig(__dirname), { input: './global.css' })
+		withNativeWind(getDefaultConfig(__dirname), { input: './src/global.css' })
 	)
 );
 

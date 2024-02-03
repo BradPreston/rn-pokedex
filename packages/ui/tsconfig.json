@@ -1,8 +1,10 @@
 {
-	"extends": "@repo/typescript-config/react-native-library",
-	"include": ["."],
-	"exclude": ["dist", "build", "node_modules"],
 	"compilerOptions": {
-		"strict": true
-	}
+		"baseUrl": ".",
+		"paths": {
+			"@ui/*": ["./src/*"]
+		}
+	},
+	"extends": "expo/tsconfig.base",
+	"include": ["../../global.d.ts", "./src/**/*.{ts,tsx}"]
 }

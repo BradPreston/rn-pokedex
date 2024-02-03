@@ -1,5 +1,5 @@
-import '../../global.css';
-import { LogBox, Text, View } from 'react-native';
+import '../global.css';
+import { LogBox } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
 import { Provider } from '@repo/query';
@@ -15,8 +15,8 @@ SplashScreen.preventAutoHideAsync();
 export default function Layout() {
 	const [fontsLoaded] = useFonts({
 		...Ionicons.font,
-    ...MaterialCommunityIcons.font,
-    ...FontAwesome.font,
+		...MaterialCommunityIcons.font,
+		...FontAwesome.font,
 		Roboto: require('../../assets/fonts/Roboto-Regular.ttf'),
 		'Roboto-Black': require('../../assets/fonts/Roboto-Black.ttf')
 	});
