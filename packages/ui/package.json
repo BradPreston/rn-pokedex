@@ -17,6 +17,7 @@
 		"@expo/html-elements": "^0.5.1",
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
 		"@fortawesome/react-native-fontawesome": "^0.3.0",
+		"expo-linking": "~6.2.2",
 		"react": "^18.2.0",
 		"react-native": "^0.72.7",
 		"nativewind": "4.0.22",

@@ -7,6 +7,7 @@ import {
 	Text,
 	View
 } from 'react-native';
+import * as Linking from 'expo-linking';
 import { SimplePokemon } from '@repo/types';
 import typeColors from './typeColors';
 import { TypeChip } from './typeChip';
@@ -19,6 +20,7 @@ type CardProps = {
 export function Card({ pokemon, image }: CardProps) {
 	// destructure name, id, and types from pokemon
 	const { name, id, types } = pokemon;
+	const redirectUrl = Linking.createURL('/pokemon/' + id);
 	// non-Nativewind supported styles
 	const rnStyles = StyleSheet.create({
 		dropShadow: {
@@ -34,7 +36,9 @@ export function Card({ pokemon, image }: CardProps) {
 	return (
 		<View
 			className={`mt-12 rounded-xl w-full ${typeColors[types[0].type.name]['cardBackground']}`}>
-			<Pressable className='w-full'>
+			<Pressable
+				className='w-full'
+				onPress={() => Linking.openURL(redirectUrl)}>
 				<View className='overflow-hidden w-full p-5'>
 					<Text className='text-gray-700 text-base font-[Roboto-Black]'>
 						#{id.toString().padStart(3, '0')}
