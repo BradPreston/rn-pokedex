@@ -20,6 +20,7 @@ type CardProps = {
 export function Card({ pokemon, image }: CardProps) {
 	// destructure name, id, and types from pokemon
 	const { name, id, types } = pokemon;
+	// create redirect url to send user to single pokemon page by ID
 	const redirectUrl = Linking.createURL('/pokemon/' + id);
 	// non-Nativewind supported styles
 	const rnStyles = StyleSheet.create({
