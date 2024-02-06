@@ -1,6 +1,5 @@
 import { GET_ALL_POKEMON, PokemonQuery } from '@repo/query';
 import { AllPokemon } from '@repo/types';
-import { LoadingSpinner } from '@repo/ui';
 import { Card } from '@repo/ui';
 import { FlatList, View } from 'react-native';
 
