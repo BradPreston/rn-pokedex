@@ -1,6 +1,7 @@
 import { P } from '@expo/html-elements';
 import { twStyles } from './styles';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type ParagraphProps = {
 	text: string;
@@ -18,7 +19,7 @@ export function Paragraph({ text, styles, shadow }: ParagraphProps) {
 
 	return (
 		<P
-			className={`${twStyles.paragraph} ${styles}`}
+			className={twMerge(`${twStyles.paragraph} ${styles}`)}
 			style={shadow ? { ...dropShadow } : null}>
 			{text}
 		</P>

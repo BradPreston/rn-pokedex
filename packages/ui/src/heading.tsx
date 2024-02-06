@@ -1,6 +1,7 @@
 import { H1, H2, H3, H4, H5, H6 } from '@expo/html-elements';
 import * as React from 'react';
 import { twStyles } from './styles';
+import { twMerge } from 'tailwind-merge';
 
 type Heading = 'H1' | 'H2' | 'H3' | 'H4' | 'H5' | 'H6';
 
@@ -23,7 +24,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H1':
 			return (
 				<H1
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H1>
@@ -31,7 +32,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H2':
 			return (
 				<H2
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H2>
@@ -39,7 +40,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H3':
 			return (
 				<H3
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H3>
@@ -47,7 +48,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H4':
 			return (
 				<H4
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H4>
@@ -55,7 +56,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H5':
 			return (
 				<H5
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H5>
@@ -63,7 +64,7 @@ export function Heading({ text, type, styles, shadow }: HeadingProps) {
 		case 'H6':
 			return (
 				<H6
-					className={`${twStyles.heading} ${styles}`}
+					className={twMerge(`${twStyles.heading} ${styles}`)}
 					style={shadow ? { ...dropShadow } : null}>
 					{text}
 				</H6>
