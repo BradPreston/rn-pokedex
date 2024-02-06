@@ -10,3 +10,7 @@ export const styles = StyleSheet.create({
 		fontSize: 16 // font-base
 	}
 });
+
+export const twStyles = {
+	heading: 'text-slate-700 leading-none my-0'
+};
