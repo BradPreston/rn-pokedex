@@ -4,8 +4,9 @@ import React from 'react';
 
 type ParagraphProps = {
 	text: string;
+	styles?: string;
 };
 
-export function Paragraph({ text }: ParagraphProps) {
-	return <P className={twStyles.paragraph}>{text}</P>;
+export function Paragraph({ text, styles }: ParagraphProps) {
+	return <P className={`${twStyles.paragraph} ${styles}`}>{text}</P>;
 }
