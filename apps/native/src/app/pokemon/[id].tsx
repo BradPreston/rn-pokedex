@@ -1,8 +1,8 @@
 import { GET_POKEMON_BY_ID, PokemonQuery } from '@repo/query';
 import { Pokemon } from '@repo/types';
-import { LoadingSpinner } from '@repo/ui/spinner';
+import { LoadingSpinner, TypeColors } from '@repo/ui';
 import { useLocalSearchParams } from 'expo-router';
-import { Text, View, Image, ActivityIndicator } from 'react-native';
+import { Header } from '@/components';
 
 export default function PokemonById() {
 	// grab the pokemon id from the url
@@ -23,20 +23,20 @@ export default function PokemonById() {
 	// if no data is found, early return
 	if (!data) return;
 
+	const { pokemon_type } = data;
+
 	// if the page is loading data, show a spinner
-	if (isFetching) return <LoadingSpinner />;
+	if (isFetching)
+		return (
+			<LoadingSpinner
+				color={TypeColors[pokemon_type[0].type.name]['textColor']}
+			/>
+		);
 
 	// else show the pokemon details
 	return (
-		<View>
-			<Text>{data.details[0].name}</Text>
-			<Image
-				className='h-40 aspect-square'
-				source={{
-					uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
-				}}
-			/>
-			<Text></Text>
-		</View>
+		<>
+			<Header pokemon={data} id={id} />
+		</>
 	);
 }
