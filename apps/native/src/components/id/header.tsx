@@ -11,7 +11,7 @@ export function Header({ pokemon, id }: IDHeaderProps) {
 	const { pokemon_type, details } = pokemon;
 	return (
 		<View
-			className={`${TypeColors[pokemon_type[0].type.name]['cardBackground']} flex-row py-10 items-center justify-center gap-10 relative`}>
+			className={`${TypeColors[pokemon_type[0].type.name]['cardBackground']} flex-row pt-10 pb-20 items-center justify-center gap-10 relative`}>
 			<Image
 				className='h-40 aspect-square'
 				source={{
@@ -35,10 +35,10 @@ export function Header({ pokemon, id }: IDHeaderProps) {
 					))}
 				</View>
 			</View>
-			<View className='absolute -z-10 w-full self-start  w-[1500px] -left-10'>
+			<View className='absolute -z-10 self-start -left-10'>
 				<Paragraph
 					text={details[0].name.toUpperCase()}
-					styles='absolute text-white text-9xl font-[Roboto-Black] opacity-10'
+					styles='absolute text-white text-9xl font-[Roboto-Black] opacity-10 w-[1500px]'
 				/>
 			</View>
 		</View>
