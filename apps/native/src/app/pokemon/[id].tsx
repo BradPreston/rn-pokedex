@@ -2,7 +2,7 @@ import { GET_POKEMON_BY_ID, PokemonQuery } from '@repo/query';
 import { Pokemon } from '@repo/types';
 import { LoadingSpinner, TypeColors } from '@repo/ui';
 import { useLocalSearchParams } from 'expo-router';
-import { Header } from '@/components';
+import { Header, Body } from '@/components/id';
 
 export default function PokemonById() {
 	// grab the pokemon id from the url
@@ -37,6 +37,7 @@ export default function PokemonById() {
 	return (
 		<>
 			<Header pokemon={data} id={id} />
+			<Body />
 		</>
 	);
 }
