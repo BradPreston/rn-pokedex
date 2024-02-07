@@ -9,7 +9,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-LogBox.ignoreAllLogs();
+// LogBox.ignoreAllLogs();
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
