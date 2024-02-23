@@ -22,7 +22,7 @@ export const GET_POKEMON_BY_ID = gql`
 				id
 			}
 		}
-		species: pokemon_v2_pokemonspecies(limit: 1) {
+		species: pokemon_v2_pokemonspecies(where: { id: { _eq: $id } }) {
 			description: pokemon_v2_pokemonspeciesflavortexts(
 				where: { language_id: { _eq: 9 } }
 				limit: 1
