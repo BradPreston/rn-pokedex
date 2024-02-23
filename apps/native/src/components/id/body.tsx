@@ -1,19 +1,17 @@
-import {
-	GestureResponderEvent,
-	NativeSyntheticEvent,
-	NativeTouchEvent,
-	Pressable,
-	View,
-	Image
-} from 'react-native';
+import { Pressable, View, Image } from 'react-native';
 import { About, Stats, Evolution } from './tabs';
 import { Paragraph } from '@repo/ui';
 import { useState } from 'react';
 import { Nav } from '@expo/html-elements';
+import { Pokemon } from '@repo/types';
 
 type CurrentTab = 'About' | 'Stats' | 'Evolution';
 
-export function Body() {
+type BodyProps = {
+	pokemon: Pokemon;
+};
+
+export function Body({ pokemon }: BodyProps) {
 	const [currentTab, setCurrentTab] = useState<CurrentTab>('About');
 
 	const handlePress = (tab: CurrentTab) => setCurrentTab(tab);
@@ -69,7 +67,7 @@ export function Body() {
 			<View className='px-4'>
 				{currentTab === 'About' && (
 					<Pressable>
-						<About />
+						<About pokemon={pokemon} />
 					</Pressable>
 				)}
 				{currentTab === 'Stats' && (
