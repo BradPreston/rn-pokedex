@@ -37,7 +37,7 @@ export default function PokemonById() {
 	return (
 		<>
 			<Header pokemon={data} id={id} />
-			<Body />
+			<Body pokemon={data} />
 		</>
 	);
 }
