@@ -65,21 +65,9 @@ export function Body({ pokemon }: BodyProps) {
 				</Pressable>
 			</Nav>
 			<View className='px-4'>
-				{currentTab === 'About' && (
-					<Pressable>
-						<About pokemon={pokemon} />
-					</Pressable>
-				)}
-				{currentTab === 'Stats' && (
-					<Pressable>
-						<Stats />
-					</Pressable>
-				)}
-				{currentTab === 'Evolution' && (
-					<Pressable>
-						<Evolution />
-					</Pressable>
-				)}
+				{currentTab === 'About' && <About pokemon={pokemon} />}
+				{currentTab === 'Stats' && <Stats />}
+				{currentTab === 'Evolution' && <Evolution />}
 			</View>
 		</View>
 	);
