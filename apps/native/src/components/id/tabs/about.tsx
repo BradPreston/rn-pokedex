@@ -32,15 +32,15 @@ export function About({ pokemon }: AboutProps) {
 				styles={`${TypeColors[pokemon_type[0].type.name]['textColor']} mb-8 mt-6`}
 			/>
 			<View className='gap-5 w-full'>
-				<View className='flex-row items-center gap-5'>
+				<View className='flex-row items-center'>
 					<Heading type='H3' text='Height' styles='w-2/5 text-sm' />
 					<Paragraph text={`${details[0].height / 10}m`} styles='w-3/5' />
 				</View>
-				<View className='flex-row items-center gap-5'>
+				<View className='flex-row items-center'>
 					<Heading type='H3' text='Weight' styles='w-2/5 text-sm' />
 					<Paragraph text={`${details[0].weight / 10}kg`} styles='w-3/5' />
 				</View>
-				<View className='flex-row gap-5'>
+				<View className='flex-row'>
 					<Heading type='H3' text='Abilities' styles='text-sm w-2/5' />
 					<View className='flex-col gap-5 w-3/5'>
 						{details[0].abilities.map(({ ability }, index) => (
@@ -57,9 +57,9 @@ export function About({ pokemon }: AboutProps) {
 						))}
 					</View>
 				</View>
-				<View className='flex-row gap-5'>
+				<View className='flex-row'>
 					<Heading type='H3' text='Weaknesses' styles='w-2/5 text-sm' />
-					<View className='flex-row flex-wrap gap-3 w-3/5'>
+					<View className='flex-row flex-wrap w-3/5 gap-3'>
 						{weaknesses.map((weakness) => (
 							<TypeChip key={weakness} type={weakness} />
 						))}
