@@ -66,7 +66,7 @@ export function Body({ pokemon }: BodyProps) {
 			</Nav>
 			<View className='px-4'>
 				{currentTab === 'About' && <About pokemon={pokemon} />}
-				{currentTab === 'Stats' && <Stats />}
+				{currentTab === 'Stats' && <Stats pokemon={pokemon} />}
 				{currentTab === 'Evolution' && <Evolution />}
 			</View>
 		</View>
