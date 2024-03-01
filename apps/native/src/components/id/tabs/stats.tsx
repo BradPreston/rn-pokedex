@@ -38,8 +38,8 @@ export function Stats({ pokemon }: StatProps) {
 									.replace('-defense', ' Def')}
 								styles='font-black capitalize w-3/12'
 							/>
-							<Paragraph text={base_stat} styles='w-1/12 text-center' />
-							<View className='w-7/12'>
+							<Paragraph text={base_stat} styles='w-2/12 text-center' />
+							<View className='w-5/12'>
 								<View className='bg-gray-100 w-5/6 h-2 rounded-full mx-auto'>
 									<View
 										style={{
@@ -54,7 +54,7 @@ export function Stats({ pokemon }: StatProps) {
 										? calculateHP(base_stat)
 										: calculateRestStats(base_stat)
 								}
-								styles='w-1/12 text-center'
+								styles='w-2/12 text-center'
 							/>
 						</View>
 					);
@@ -63,11 +63,11 @@ export function Stats({ pokemon }: StatProps) {
 					<View className='w-3/12'>
 						{/* placeholder space below stat names */}
 					</View>
-					<Paragraph text='Base' styles='w-1/12 text-center font-black' />
-					<View className='w-7/12'>
+					<Paragraph text='Base' styles='w-2/12 text-center font-black' />
+					<View className='w-5/12'>
 						{/* placeholder space below progress bar */}
 					</View>
-					<Paragraph text='Max' styles='w-1/12 text-center font-black' />
+					<Paragraph text='Max' styles='w-2/12 text-center font-black' />
 				</View>
 			</View>
 		</View>
